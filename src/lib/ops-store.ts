@@ -98,10 +98,12 @@ function seedReportes(): Reporte[] {
       fecha,
       tipoGuardia: tipo,
       supervisorId,
-      robots: Object.fromEntries(
-        seedRobots.map((r, i) => [
-          r.id,
-          {
+robotsRevisados: false,
+mixersRevisados: false,
+robots: Object.fromEntries(
+  seedRobots.map((r, i) => [
+    r.id,
+    {
             estado: i === 3 ? "mantenimiento" : i === 4 ? "standby" : "operativo",
             combustible: { inicio: true, media: i % 2 === 0, final: true },
             aditivo: i % 2 === 0,
@@ -281,7 +283,9 @@ export function nuevoReporte(data: OpsData): Reporte {
     fecha,
     tipoGuardia: "dia",
     supervisorId: "",
-    robots: Object.fromEntries(
+robotsRevisados: false,
+mixersRevisados: false,
+robots: Object.fromEntries(
       data.robots.filter((r) => r.activo).map((r) => [
         r.id,
         { estado: "operativo", combustible: { inicio: false, media: false, final: false }, aditivo: null } as RobotDetalle,
