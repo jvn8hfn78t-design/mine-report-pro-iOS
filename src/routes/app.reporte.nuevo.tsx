@@ -106,7 +106,6 @@ if (borrador) {
 
   const t = setTimeout(() => {
     guardarReporte(rep);
-    setData((d) => ({ ...d, borradorId: rep.id }));
   }, 400);
 
   return () => clearTimeout(t);
