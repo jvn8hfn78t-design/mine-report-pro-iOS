@@ -103,11 +103,7 @@ if (borrador) {
   useEffect(() => {
   if (!rep || rep.estado === "finalizado") return;
 
-  const t = setTimeout(() => {
-    guardarReporte(rep);
-  }, 400);
-
-  return () => clearTimeout(t);
+  guardarReporte(rep);
 }, [rep]);
 
   const robotsActivos = useMemo(() => data.robots.filter((r) => rep?.robots[r.id]), [data.robots, rep]);
