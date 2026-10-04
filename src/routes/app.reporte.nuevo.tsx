@@ -202,7 +202,6 @@ const revisarPendientes = (): string[] => {
     correlativo: `RG-${rep.fecha.replaceAll("-", "")}-${rep.tipoGuardia === "dia" ? "D" : "N"}`,
     estado: "finalizado",
     finalizadoEn: new Date().toISOString(),
-    sync: navigator.onLine ? "sincronizado" : "pendiente",
   };
 
   guardarReporte(final);
