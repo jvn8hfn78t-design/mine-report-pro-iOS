@@ -222,6 +222,11 @@ const revisarPendientes = (): string[] => {
   navigate({ to: "/app/reporte/$id", params: { id: final.id } });
 };
 
+  const abrirPaso = (indice: number) => {
+    setPaso(indice);
+    setMostrarIndice(false);
+  };
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-5">
       <div className="mb-5">
