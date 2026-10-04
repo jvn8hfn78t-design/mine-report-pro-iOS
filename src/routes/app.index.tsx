@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Boxes, FilePlus2, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { nombreSupervisor, useOpsData } from "@/lib/ops-store";
-import { ESTADO_CLASSES, ESTADO_LABEL, type EstadoEquipo } from "@/lib/ops-types";
+import { type EstadoEquipo } from "@/lib/ops-types";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({
@@ -77,6 +77,60 @@ const conteoMixers = (estado: EstadoEquipo) =>
   </Link>
 </Button>
 
+<section className="space-y-3">
+  <div>
+    <h2 className="text-sm font-bold uppercase tracking-wide">
+      Equipos de la guardia
+    </h2>
+    <p className="text-xs text-muted-foreground">
+      Estado actual del reporte en curso
+    </p>
+  </div>
+
+  <div className="grid grid-cols-2 gap-3">
+    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+      <div className="flex items-center gap-2">
+        <span className="text-lg">🤖</span>
+        <p className="text-sm font-bold">ROBOTS</p>
+      </div>
+
+      <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-semibold">
+        <span>🟢 {conteoRobots("operativo")} OPER</span>
+        <span>🔵 {conteoRobots("standby")} STBY</span>
+        <span>🟡 {conteoRobots("mantenimiento")} MANT</span>
+        <span>🔴 {conteoRobots("inoperativo")} INOP</span>
+      </div>
+
+      <Link
+        to="/app/catalogos"
+        className="mt-3 inline-flex text-xs font-semibold text-primary"
+      >
+        Ver equipos →
+      </Link>
+    </div>
+
+    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+      <div className="flex items-center gap-2">
+        <span className="text-lg">🚜</span>
+        <p className="text-sm font-bold">MIXERS</p>
+      </div>
+
+      <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-semibold">
+        <span>🟢 {conteoMixers("operativo")} OPER</span>
+        <span>🔵 {conteoMixers("standby")} STBY</span>
+        <span>🟡 {conteoMixers("mantenimiento")} MANT</span>
+        <span>🔴 {conteoMixers("inoperativo")} INOP</span>
+      </div>
+
+      <Link
+        to="/app/catalogos"
+        className="mt-3 inline-flex text-xs font-semibold text-primary"
+      >
+        Ver equipos →
+      </Link>
+    </div>
+  </div>
+</section>
 
       <div className="rounded-lg border border-border bg-card">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
