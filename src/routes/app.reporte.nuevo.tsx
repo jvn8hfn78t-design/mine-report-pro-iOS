@@ -1018,6 +1018,8 @@ placeholder="0"
           Siguiente <ArrowRight className="ml-1 size-4" />
         </Button>
       </div>
+      </>
+      )}
     </div>
   );
 }
