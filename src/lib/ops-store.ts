@@ -8,7 +8,6 @@ export interface OpsData {
   mixers: Equipo[];
   usuarios: Usuario[];
   reportes: Reporte[];
-  borradorId: string | null;
 }
 
 const seedRobots: Equipo[] = [
@@ -93,7 +92,6 @@ function defaults(): OpsData {
     mixers: seedMixers,
     usuarios: seedUsuarios,
     reportes: [],
-    borradorId: null,
   };
 }
 
