@@ -1,50 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import { marcarSincronizados } from "@/lib/ops-store";
+import { useEffect, useState } from "react";
 
-export type EstadoConexion = "conectado" | "sin-conexion" | "sincronizando" | "sincronizado";
+export type EstadoConexion = "conectado" | "sin-conexion";
 
 export function useConexion() {
-  const [estado, setEstado] = useState<EstadoConexion>("conectado");
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [estado, setEstado] = useState<EstadoConexion>(
+    navigator.onLine ? "conectado" : "sin-conexion"
+  );
 
   useEffect(() => {
-    const online = () => {
-      setEstado("sincronizando");
-      if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => {
-        marcarSincronizados();
-        setEstado("sincronizado");
-        timer.current = setTimeout(() => setEstado("conectado"), 4000);
-      }, 1800);
-    };
-    const offline = () => {
-      if (timer.current) clearTimeout(timer.current);
-      setEstado("sin-conexion");
-    };
+    const online = () => setEstado("conectado");
+    const offline = () => setEstado("sin-conexion");
 
-    setEstado(navigator.onLine ? "conectado" : "sin-conexion");
     window.addEventListener("online", online);
     window.addEventListener("offline", offline);
+
     return () => {
       window.removeEventListener("online", online);
       window.removeEventListener("offline", offline);
-      if (timer.current) clearTimeout(timer.current);
     };
   }, []);
 
-  const sincronizar = () => {
-    if (!navigator.onLine) {
-      setEstado("sin-conexion");
-      return;
-    }
-    setEstado("sincronizando");
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      marcarSincronizados();
-      setEstado("sincronizado");
-      timer.current = setTimeout(() => setEstado("conectado"), 4000);
-    }, 1500);
-  };
-
-  return { estado, sincronizar };
+  return { estado };
 }
