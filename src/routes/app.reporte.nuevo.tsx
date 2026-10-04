@@ -31,6 +31,9 @@ import {
 } from "@/lib/ops-types";
 
 export const Route = createFileRoute("/app/reporte/nuevo")({
+  validateSearch: (search) => ({
+    continuar: search.continuar === "1",
+  }),
   head: () => ({
     meta: [
       { title: "Nuevo reporte de guardia | Guardia Ops" },
@@ -78,15 +81,24 @@ function Contadores({ estados }: { estados: EstadoEquipo[] }) {
 function NuevoReporte() {
   const data = useOpsData();
   const navigate = useNavigate();
+  const { continuar } = Route.useSearch();
   const [rep, setRep] = useState<Reporte | null>(null);
   const [paso, setPaso] = useState(0);
   const [errores, setErrores] = useState<string[]>([]);
+  const [mostrarIndice, setMostrarIndice] = useState(false);
 
   useEffect(() => {
-    const d = getData();
-    const borrador = d.reportes.find((r) => r.estado === "borrador");
-    setRep(borrador ?? nuevoReporte(d));
-  }, []);
+  const d = getData();
+  const borrador = d.reportes.find((r) => r.estado === "borrador");
+
+  if (borrador) {
+    setRep(borrador);
+    setMostrarIndice(continuar);
+  } else {
+    setRep(nuevoReporte(d));
+    setMostrarIndice(false);
+  }
+}, [continuar]);
 
   // Autoguardado en el dispositivo
   useEffect(() => {
