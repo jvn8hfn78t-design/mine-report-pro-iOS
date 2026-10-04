@@ -28,14 +28,12 @@ function Historial() {
   const [hasta, setHasta] = useState("");
   const [guardia, setGuardia] = useState("todas");
   const [supervisor, setSupervisor] = useState("todos");
-  const [sync, setSync] = useState("todos");
 
   const filtrados = data.reportes.filter((r) => {
     if (desde && r.fecha < desde) return false;
     if (hasta && r.fecha > hasta) return false;
     if (guardia !== "todas" && r.tipoGuardia !== guardia) return false;
     if (supervisor !== "todos" && r.supervisorId !== supervisor) return false;
-    if (sync !== "todos" && r.sync !== sync) return false;
     return true;
   });
 
@@ -83,16 +81,6 @@ function Historial() {
           </select>
         </div>
         <div className="space-y-1">
-          <Label className="text-xs">Sincronización</Label>
-          <select
-            value={sync}
-            onChange={(e) => setSync(e.target.value)}
-            className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-          >
-            <option value="todos">Todos</option>
-            <option value="sincronizado">Sincronizado</option>
-            <option value="pendiente">Pendiente</option>
-          </select>
         </div>
       </div>
 
@@ -122,15 +110,6 @@ function Historial() {
                     }`}
                   >
                     {r.estado === "finalizado" ? "Finalizado" : "Borrador"}
-                  </span>
-                  <span
-                    className={`rounded px-2 py-0.5 font-semibold ${
-                      r.sync === "sincronizado"
-                        ? "bg-status-standby/15 text-status-standby"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {r.sync === "sincronizado" ? "Sincronizado" : "Pendiente de sincronizar"}
                   </span>
                   <span className="text-muted-foreground">
                     {r.lanzamientos.length} lanzamientos · {r.carguios.length} carguíos · {r.fallas.length} fallas
