@@ -396,7 +396,7 @@ const revisarPendientes = (): string[] => {
             ) : (
               <>
                 {rep.lanzamientos.map((l, i) => (
-                  <div key={l.id} className="grid gap-3 rounded border border-border p-3 sm:grid-cols-2">
+                  <div key={l.id} className="grid gap-2 rounded border border-border p-3 sm:grid-cols-2">
                     <div className="flex items-center justify-between sm:col-span-2">
                       <p className="text-xs font-semibold uppercase text-primary">Lanzamiento {i + 1}</p>
                       <Button
