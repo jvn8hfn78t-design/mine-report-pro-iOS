@@ -86,7 +86,6 @@ export interface Desecho {
 }
 
 export type EstadoReporte = "borrador" | "finalizado";
-export type EstadoSync = "pendiente" | "sincronizado";
 
 export interface Reporte {
   id: string;
