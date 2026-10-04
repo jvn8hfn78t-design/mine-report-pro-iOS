@@ -1010,12 +1010,29 @@ placeholder="0"
         )}
       </div>
 
-      <div className="mt-5 flex items-center justify-between gap-3">
-        <Button variant="outline" disabled={paso === 0} onClick={() => setPaso(paso - 1)}>
-          <ArrowLeft className="mr-1 size-4" /> Anterior
+            <div className="mt-5 grid grid-cols-3 items-center gap-2">
+        <Button
+          variant="outline"
+          disabled={paso === 0}
+          onClick={() => setPaso(paso - 1)}
+        >
+          <ArrowLeft className="mr-1 size-4" />
+          Anterior
         </Button>
-        <Button disabled={paso === PASOS.length - 1} onClick={() => setPaso(paso + 1)}>
-          Siguiente <ArrowRight className="ml-1 size-4" />
+
+        <Button
+          variant="ghost"
+          onClick={() => setMostrarIndice(true)}
+        >
+          Índice
+        </Button>
+
+        <Button
+          disabled={paso === PASOS.length - 1}
+          onClick={() => setPaso(paso + 1)}
+        >
+          Siguiente
+          <ArrowRight className="ml-1 size-4" />
         </Button>
       </div>
       </>
