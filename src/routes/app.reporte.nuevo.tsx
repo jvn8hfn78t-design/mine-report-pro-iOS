@@ -147,17 +147,17 @@ function NuevoReporte() {
 const revisarPendientes = (): string[] => {
   const pendientes: string[] = [];
 
-  const robotsSinCombustible = robotsActivos
-    .filter((r) => {
-      const c = detRobot(r.id).combustible;
+  const robotsSinCombustible = robotsOperativos
+  .filter((r) => {
+    const c = detRobot(r.id).combustible;
 
-      return !c.inicio && !c.media && !c.final;
-    })
-    .map((r) => r.codigo);
+    return !c.inicio && !c.media && !c.final;
+  })
+  .map((r) => r.codigo);
 
-  const robotsSinAditivo = robotsActivos
-    .filter((r) => detRobot(r.id).aditivo === null)
-    .map((r) => r.codigo);
+const robotsSinAditivo = robotsOperativos
+  .filter((r) => detRobot(r.id).aditivo === null)
+  .map((r) => r.codigo);
 
   if (robotsSinCombustible.length > 0) {
     pendientes.push(
@@ -1126,7 +1126,7 @@ placeholder="0"
             ))}
 
             <Button className="w-full" size="lg" onClick={finalizar}>
-              <CheckCircle2 className="mr-1 size-4" /> Finalizar guardia y generar PDF
+              <CheckCircle2 className="mr-1 size-4" /> Finalizar guardia
             </Button>
           </div>
         )}
