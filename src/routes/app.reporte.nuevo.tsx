@@ -227,12 +227,48 @@ const revisarPendientes = (): string[] => {
     setMostrarIndice(false);
   };
 
-  return (
+    return (
     <div className="mx-auto max-w-3xl px-4 py-5">
-      <div className="mb-5">
-        <p className="text-xs uppercase tracking-widest text-primary">
-          Paso {paso + 1} de {PASOS.length}
-        </p>
+      {mostrarIndice ? (
+        <div className="space-y-4">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-primary">
+              Reporte de guardia
+            </p>
+            <h1 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
+              Índice del reporte
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Selecciona la sección que deseas revisar o completar.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            {PASOS.map((nombre, indice) => (
+              <button
+                key={nombre}
+                type="button"
+                onClick={() => abrirPaso(indice)}
+                className="flex w-full items-center justify-between rounded-lg border border-border bg-card p-4 text-left transition hover:bg-accent"
+              >
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Paso {indice + 1}
+                  </p>
+                  <p className="mt-0.5 text-sm font-semibold">{nombre}</p>
+                </div>
+
+                <ArrowRight className="size-4 text-muted-foreground" />
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="mb-5">
+            <p className="text-xs uppercase tracking-widest text-primary">
+              Paso {paso + 1} de {PASOS.length}
+            </p>
         <h1 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">{PASOS[paso]}</h1>
         <Progress value={((paso + 1) / PASOS.length) * 100} className="mt-3" />
         <p className="mt-2 flex items-center gap-1 text-[11px] text-muted-foreground">
