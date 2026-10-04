@@ -86,114 +86,13 @@ const seedUsuarios: Usuario[] = [
   },
 ];
 
-function seedReportes(): Reporte[] {
-  const hoy = new Date();
-  const mk = (dias: number, tipo: "dia" | "noche", supervisorId: string): Reporte => {
-    const d = new Date(hoy);
-    d.setDate(d.getDate() - dias);
-    const fecha = d.toISOString().slice(0, 10);
-    return {
-      id: `rep-seed-${dias}-${tipo}`,
-      correlativo: `RG-${fecha.replaceAll("-", "")}-${tipo === "dia" ? "D" : "N"}`,
-      fecha,
-      tipoGuardia: tipo,
-      supervisorId,
-robotsRevisados: false,
-mixersRevisados: false,
-robots: Object.fromEntries(
-  seedRobots.map((r, i) => [
-    r.id,
-    {
-            estado: i === 3 ? "mantenimiento" : i === 4 ? "standby" : "operativo",
-            combustible: { inicio: true, media: i % 2 === 0, final: true },
-            aditivo: i % 2 === 0,
-          } as RobotDetalle,
-        ]),
-      ),
-      mixers: Object.fromEntries(
-        seedMixers.map((m, i) => [
-          m.id,
-          { estado: i === 3 ? "inoperativo" : i === 5 ? "standby" : "operativo" } as MixerDetalle,
-        ]),
-      ),
-      lanzamientos: [
-  {
-    id: `l1-${dias}`,
-    robotId: "rb-074",
-    hora: "08:40",
-    labor: "Tj-420",
-    cantidad: 5,
-    notas: "Sin observaciones",
-  },
-  {
-    id: `l2-${dias}`,
-    robotId: "rb-076",
-    hora: "13:15",
-    labor: "Hastial nivel 380",
-    cantidad: 4,
-    notas: "",
-  },
-],
-carguios: [
-  {
-    id: `c1-${dias}`,
-    mixerId: "mx-298",
-    hora: "08:05",
-    labor: "Tj-420",
-    cantidad: 4,
-    notas: "",
-  },
-  {
-    id: `c2-${dias}`,
-    mixerId: "mx-303",
-    hora: "12:30",
-    labor: "Nivel 380",
-    cantidad: 3.5,
-    notas: "Demora por tránsito en rampa",
-  },
-],
-      fallas: [
-        {
-          id: `f1-${dias}`,
-          equipoId: "rb-085",
-          hora: "10:20",
-          tipo: "Hidráulica",
-          descripcion: "Fuga en manguera de brazo lanzador",
-          accion: "Se reportó a mantenimiento y se aisló el equipo",
-          estadoFinal: "mantenimiento",
-        },
-      ],
-      desechos: [
-        {
-          id: `d1-${dias}`,
-          tipo: "Desecho",
-          hora: "14:00",
-          equipoId: "rb-074",
-          cantidad: 0.8,
-          unidad: "m3",
-          descripcion: "Retirado a cámara de acumulación nivel 320",
-        },
-      ],
-      observaciones:
-        "Guardia sin incidentes de seguridad. Se cumplió el programa de lanzamiento con 2 labores completadas.",
-      estado: "finalizado",
-      creadoEn: d.toISOString(),
-      finalizadoEn: d.toISOString(),
-    };
-  };
-  return [
-  mk(1, "dia", "us-01"),
-  mk(2, "noche", "us-02"),
-  mk(3, "dia", "us-04"),
-];
-}
 
 function defaults(): OpsData {
   return {
     robots: seedRobots,
     mixers: seedMixers,
     usuarios: seedUsuarios,
-    reportes: seedReportes(),
+    reportes: [],
     borradorId: null,
   };
 }
@@ -224,17 +123,11 @@ export function getData(): OpsData {
       ? guardado.reportes
       : [];
 
-    const tieneReportesFinalizados = reportesGuardados.some(
-      (r) => r.estado === "finalizado",
-    );
-
     cache = {
-      ...base,
-      ...guardado,
-      reportes: tieneReportesFinalizados
-        ? reportesGuardados
-        : base.reportes,
-    };
+  ...base,
+  ...guardado,
+  reportes: reportesGuardados,
+};
 
     return cache;
   } catch {
@@ -276,7 +169,9 @@ export function uid(prefix = "id") {
 }
 
 export function nuevoReporte(data: OpsData): Reporte {
-  const fecha = new Date().toISOString().slice(0, 10);
+  const ahora = new Date();
+  const fecha =
+    `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, "0")}-${String(ahora.getDate()).padStart(2, "0")}`;
   return {
     id: uid("rep"),
     correlativo: `RG-${fecha.replaceAll("-", "")}-D`,
