@@ -119,23 +119,60 @@ function NuevoReporte() {
   const mixersOperativos = mixersActivos.filter((m) => rep.mixers[m.id]?.estado === "operativo");
 
   const validar = (): string[] => {
-    const e: string[] = [];
-    if (!rep.fecha) e.push("Falta la fecha de guardia.");
-    if (!rep.supervisorId) e.push("Debe seleccionar el supervisor de guardia.");
-    robotsActivos.forEach((r) => {
-      const det = detRobot(r.id);
-      if (det.estado === "operativo") {
-        const c = det.combustible;
-        if (!c.inicio && !c.media && !c.final) e.push(`${r.codigo}: registre el control de combustible.`);
-        if (det.aditivo === null) e.push(`${r.codigo}: indique si usó aditivo.`);
-      }
-    });
-    if (robotsOperativos.length > 0 && rep.lanzamientos.length === 0)
-      e.push("Registre al menos un lanzamiento de robot.");
-    if (mixersOperativos.length > 0 && rep.carguios.length === 0) e.push("Registre al menos un carguío de mixer.");
-    if (!rep.observaciones.trim()) e.push("Complete las observaciones generales de guardia.");
-    return e;
-  };
+  const e: string[] = [];
+
+  if (!rep.fecha) {
+    e.push("Falta la fecha de guardia.");
+  }
+
+  if (!rep.supervisorId) {
+    e.push("Debe seleccionar el supervisor de guardia.");
+  }
+
+  return e;
+};
+
+const revisarPendientes = (): string[] => {
+  const pendientes: string[] = [];
+
+  const robotsSinCombustible = robotsActivos
+    .filter((r) => {
+      const c = detRobot(r.id).combustible;
+
+      return !c.inicio && !c.media && !c.final;
+    })
+    .map((r) => r.codigo);
+
+  const robotsSinAditivo = robotsActivos
+    .filter((r) => detRobot(r.id).aditivo === null)
+    .map((r) => r.codigo);
+
+  if (robotsSinCombustible.length > 0) {
+    pendientes.push(
+      `Sin control de combustible: ${robotsSinCombustible.join(", ")}`
+    );
+  }
+
+  if (robotsSinAditivo.length > 0) {
+    pendientes.push(
+      `Sin indicar aditivo: ${robotsSinAditivo.join(", ")}`
+    );
+  }
+
+  if (robotsOperativos.length > 0 && rep.lanzamientos.length === 0) {
+    pendientes.push("No se registraron lanzamientos.");
+  }
+
+  if (mixersOperativos.length > 0 && rep.carguios.length === 0) {
+    pendientes.push("No se registraron carguíos de mixer.");
+  }
+
+  if (!rep.observaciones.trim()) {
+    pendientes.push("Sin observaciones generales.");
+  }
+
+  return pendientes;
+};
 
   const finalizar = () => {
     const e = validar();
