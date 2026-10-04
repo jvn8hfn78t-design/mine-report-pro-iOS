@@ -212,7 +212,6 @@ export function eliminarReporte(id: string) {
   setData((d) => ({
     ...d,
     reportes: d.reportes.filter((r) => r.id !== id),
-    borradorId: d.borradorId === id ? null : d.borradorId,
   }));
 }
 
