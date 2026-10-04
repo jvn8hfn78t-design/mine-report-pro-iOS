@@ -533,7 +533,7 @@ placeholder="0"
             ) : (
               <>
                 {rep.carguios.map((c, i) => (
-                  <div key={c.id} className="grid gap-3 rounded border border-border p-3 sm:grid-cols-2">
+                  <div key={c.id} className="grid gap-2 rounded border border-border p-3 sm:grid-cols-2">
                     <div className="flex items-center justify-between sm:col-span-2">
                       <p className="text-xs font-semibold uppercase text-primary">Carguío {i + 1}</p>
                       <Button
@@ -753,7 +753,7 @@ placeholder="0"
               const setD = (patch: Partial<typeof d>) =>
                 up({ desechos: rep.desechos.map((x) => (x.id === d.id ? { ...x, ...patch } : x)) });
               return (
-                <div key={d.id} className="grid gap-3 rounded border border-border p-3 sm:grid-cols-2">
+                <div key={d.id} className="grid gap-2 rounded border border-border p-3 sm:grid-cols-2">
                   <div className="flex items-center justify-between sm:col-span-2">
                     <p className="text-xs font-semibold uppercase text-primary">Registro {i + 1}</p>
                     <Button
