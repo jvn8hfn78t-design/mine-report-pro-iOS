@@ -276,16 +276,39 @@ const estadoPaso = (indice: number): "completo" | "pendiente" | "sin-registros" 
       {mostrarIndice ? (
         <div className="space-y-4">
           <div>
-            <p className="text-xs uppercase tracking-widest text-primary">
-              Reporte de guardia
-            </p>
-            <h1 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
-              Índice del reporte
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Selecciona la sección que deseas revisar o completar.
-            </p>
-          </div>
+  <p className="text-xs uppercase tracking-widest text-primary">
+    Reporte de guardia
+  </p>
+
+  <h1 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
+    Índice del reporte
+  </h1>
+
+  <p className="mt-1 text-sm text-muted-foreground">
+    Selecciona la sección que deseas revisar o completar.
+  </p>
+
+  <div className="mt-4 rounded-lg border border-border bg-card p-3">
+    <div className="flex items-center justify-between gap-3">
+      <span className="text-xs font-semibold text-muted-foreground">
+        Progreso del reporte
+      </span>
+
+      <span className="text-sm font-bold">
+        {PASOS.filter((_, i) => estadoPaso(i) === "completo").length}/{PASOS.length}
+      </span>
+    </div>
+
+    <Progress
+      value={
+        (PASOS.filter((_, i) => estadoPaso(i) === "completo").length /
+          PASOS.length) *
+        100
+      }
+      className="mt-2"
+    />
+  </div>
+</div>
 
           <div className="space-y-2">
             {PASOS.map((nombre, indice) => {
