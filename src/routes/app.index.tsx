@@ -22,7 +22,9 @@ function Panel() {
   const ultimos = data.reportes.slice(0, 5);
   const pendientes = data.reportes.filter((r) => r.sync === "pendiente").length;
 
-  const ultimoReporte = data.reportes[0];
+  const ultimoReporte = data.reportes.find(
+  (r) => r.estado === "finalizado"
+);
 
 const conteoRobots = (estado: EstadoEquipo) =>
   ultimoReporte
