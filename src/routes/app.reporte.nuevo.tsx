@@ -217,8 +217,9 @@ const robotsSinAditivo = robotsOperativos
   guardarReporte(final);
 toast.success("Reporte finalizado y bloqueado");
 navigate({ to: "/app/reporte/$id", params: { id: final.id } });
+};
 
-  const abrirPaso = (indice: number) => {
+const abrirPaso = (indice: number) => {
   setPaso(indice);
   setMostrarIndice(false);
 };
