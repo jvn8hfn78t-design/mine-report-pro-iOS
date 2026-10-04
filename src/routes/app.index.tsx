@@ -21,26 +21,16 @@ function Panel() {
   const borrador = data.reportes.find((r) => r.estado === "borrador");
   const ultimos = data.reportes.slice(0, 5);
 
-  const ultimoReporte = data.reportes.find(
-  (r) => r.estado === "finalizado"
-);
 
 const conteoRobots = (estado: EstadoEquipo) =>
-  ultimoReporte
-    ? Object.values(ultimoReporte.robots).filter((r) => r.estado === estado).length
+  borrador
+    ? Object.values(borrador.robots).filter((r) => r.estado === estado).length
     : 0;
 
 const conteoMixers = (estado: EstadoEquipo) =>
-  ultimoReporte
-    ? Object.values(ultimoReporte.mixers).filter((m) => m.estado === estado).length
+  borrador
+    ? Object.values(borrador.mixers).filter((m) => m.estado === estado).length
     : 0;
-
-const estados: EstadoEquipo[] = [
-  "operativo",
-  "inoperativo",
-  "mantenimiento",
-  "standby",
-];
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 px-4 py-6">
