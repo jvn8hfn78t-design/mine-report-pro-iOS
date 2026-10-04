@@ -220,13 +220,8 @@ const robotsSinAditivo = robotsOperativos
   };
 
   guardarReporte(final);
-setData((d) => ({
-  ...d,
-  borradorId: null,
-}));
 toast.success("Reporte finalizado y bloqueado");
-  navigate({ to: "/app/reporte/$id", params: { id: final.id } });
-};
+navigate({ to: "/app/reporte/$id", params: { id: final.id } });
 
   const abrirPaso = (indice: number) => {
   setPaso(indice);
