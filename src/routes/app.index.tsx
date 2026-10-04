@@ -20,7 +20,6 @@ function Panel() {
   const data = useOpsData();
   const borrador = data.reportes.find((r) => r.estado === "borrador");
   const ultimos = data.reportes.slice(0, 5);
-  const pendientes = data.reportes.filter((r) => r.sync === "pendiente").length;
 
   const ultimoReporte = data.reportes.find(
   (r) => r.estado === "finalizado"
@@ -48,7 +47,7 @@ const estados: EstadoEquipo[] = [
       <div>
         <h1 className="text-2xl font-bold uppercase tracking-tight">Panel de guardia</h1>
         <p className="text-sm text-muted-foreground">
-          {data.robots.length} robots · {data.mixers.length} mixers · {pendientes} reporte(s) por sincronizar
+          {data.robots.length} robots · {data.mixers.length} mixers · Datos guardados en el dispositivo
         </p>
       </div>
 
