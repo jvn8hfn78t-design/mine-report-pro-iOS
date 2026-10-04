@@ -91,13 +91,13 @@ function NuevoReporte() {
   const d = getData();
   const borrador = d.reportes.find((r) => r.estado === "borrador");
 
-  if (borrador) {
-    setRep(borrador);
-    setMostrarIndice(continuar);
-  } else {
-    setRep(nuevoReporte(d));
-    setMostrarIndice(false);
-  }
+if (borrador) {
+  setRep(borrador);
+  setMostrarIndice(continuar);
+} else {
+  setRep(nuevoReporte(d));
+  setMostrarIndice(false);
+}
 }, [continuar]);
 
   // Autoguardado en el dispositivo
