@@ -179,9 +179,6 @@ const revisarPendientes = (): string[] => {
     pendientes.push("No se registraron carguíos de mixer.");
   }
 
-  if (!rep.observaciones.trim()) {
-    pendientes.push("Sin observaciones generales.");
-  }
 
   return pendientes;
 };
