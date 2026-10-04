@@ -223,9 +223,53 @@ const revisarPendientes = (): string[] => {
 };
 
   const abrirPaso = (indice: number) => {
-    setPaso(indice);
-    setMostrarIndice(false);
-  };
+  setPaso(indice);
+  setMostrarIndice(false);
+};
+
+const estadoPaso = (indice: number): "completo" | "pendiente" | "sin-registros" => {
+  switch (indice) {
+    case 0:
+      return rep.fecha && rep.supervisorId ? "completo" : "pendiente";
+
+    case 1:
+      return robotsActivos.every((r) => Boolean(rep.robots[r.id])) ? "completo" : "pendiente";
+
+    case 2:
+      return mixersActivos.every((m) => Boolean(rep.mixers[m.id])) ? "completo" : "pendiente";
+
+    case 3: {
+      const completo = robotsActivos.every((r) => {
+        const det = detRobot(r.id);
+        const combustible = det.combustible.inicio || det.combustible.media || det.combustible.final;
+        return combustible && det.aditivo !== null;
+      });
+
+      return completo ? "completo" : "pendiente";
+    }
+
+    case 4:
+      return rep.lanzamientos.length > 0 ? "completo" : "pendiente";
+
+    case 5:
+      return rep.carguios.length > 0 ? "completo" : "pendiente";
+
+    case 6:
+      return rep.fallas.length > 0 ? "completo" : "sin-registros";
+
+    case 7:
+      return rep.desechos.length > 0 ? "completo" : "sin-registros";
+
+    case 8:
+      return rep.observaciones.trim() ? "completo" : "pendiente";
+
+    case 9:
+      return validar().length === 0 ? "completo" : "pendiente";
+
+    default:
+      return "pendiente";
+  }
+};
 
     return (
     <div className="mx-auto max-w-3xl px-4 py-5">
@@ -244,23 +288,48 @@ const revisarPendientes = (): string[] => {
           </div>
 
           <div className="space-y-2">
-            {PASOS.map((nombre, indice) => (
-              <button
-                key={nombre}
-                type="button"
-                onClick={() => abrirPaso(indice)}
-                className="flex w-full items-center justify-between rounded-lg border border-border bg-card p-4 text-left transition hover:bg-accent"
-              >
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Paso {indice + 1}
-                  </p>
-                  <p className="mt-0.5 text-sm font-semibold">{nombre}</p>
-                </div>
+            {PASOS.map((nombre, indice) => {
+  const estado = estadoPaso(indice);
 
-                <ArrowRight className="size-4 text-muted-foreground" />
-              </button>
-            ))}
+  const estadoTexto = {
+    completo: "Completo",
+    pendiente: "Pendiente",
+    "sin-registros": "Sin registros",
+  }[estado];
+
+  const estadoClase = {
+    completo: "bg-green-100 text-green-700",
+    pendiente: "bg-amber-100 text-amber-700",
+    "sin-registros": "bg-muted text-muted-foreground",
+  }[estado];
+
+  return (
+    <button
+      key={nombre}
+      type="button"
+      onClick={() => abrirPaso(indice)}
+      className="flex w-full items-center justify-between rounded-lg border border-border bg-card p-4 text-left transition hover:bg-accent"
+    >
+      <div className="min-w-0">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Paso {indice + 1}
+        </p>
+
+        <p className="mt-0.5 text-sm font-semibold">
+          {nombre}
+        </p>
+
+        <span
+          className={`mt-2 inline-block rounded px-2 py-0.5 text-[10px] font-semibold ${estadoClase}`}
+        >
+          {estadoTexto}
+        </span>
+      </div>
+
+      <ArrowRight className="ml-3 size-4 shrink-0 text-muted-foreground" />
+    </button>
+  );
+})}
           </div>
         </div>
       ) : (
