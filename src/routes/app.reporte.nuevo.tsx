@@ -14,7 +14,6 @@ import {
   nombreEquipo,
   nombreSupervisor,
   nuevoReporte,
-  setData,
   uid,
   useOpsData,
 } from "@/lib/ops-store";
