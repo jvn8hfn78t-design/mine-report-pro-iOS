@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { useConexion } from "@/hooks/use-conexion";
 
 export function BannerConexion() {
-  const { estado, sincronizar } = useConexion();
+  const { estado } = useConexion();
 
   const config = {
     conectado: {
@@ -39,12 +39,6 @@ export function BannerConexion() {
         {config.texto}
       </span>
       <span className="hidden flex-1 truncate text-muted-foreground sm:block">{config.detalle}</span>
-      <button
-        onClick={sincronizar}
-        className="ml-auto rounded border border-current/40 px-2 py-1 text-xs font-medium hover:bg-current/10"
-      >
-        Sincronizar
-      </button>
     </div>
   );
 }
