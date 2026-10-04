@@ -175,24 +175,41 @@ const revisarPendientes = (): string[] => {
 };
 
   const finalizar = () => {
-    const e = validar();
-    setErrores(e);
-    if (e.length > 0) {
-      toast.error("El reporte tiene información pendiente");
+  const e = validar();
+  setErrores(e);
+
+  if (e.length > 0) {
+    toast.error("Falta completar información obligatoria");
+    return;
+  }
+
+  const pendientes = revisarPendientes();
+
+  if (pendientes.length > 0) {
+    const continuar = window.confirm(
+      `Hay información que aún no fue registrada:\n\n• ${pendientes.join(
+        "\n• "
+      )}\n\n¿Deseas finalizar la guardia de todas formas?`
+    );
+
+    if (!continuar) {
       return;
     }
-    const final: Reporte = {
-      ...rep,
-      correlativo: `RG-${rep.fecha.replaceAll("-", "")}-${rep.tipoGuardia === "dia" ? "D" : "N"}`,
-      estado: "finalizado",
-      finalizadoEn: new Date().toISOString(),
-      sync: navigator.onLine ? "sincronizado" : "pendiente",
-    };
-    guardarReporte(final);
-    setData((d) => ({ ...d, borradorId: null }));
-    toast.success("Reporte finalizado y bloqueado");
-    navigate({ to: "/app/reporte/$id", params: { id: final.id } });
+  }
+
+  const final: Reporte = {
+    ...rep,
+    correlativo: `RG-${rep.fecha.replaceAll("-", "")}-${rep.tipoGuardia === "dia" ? "D" : "N"}`,
+    estado: "finalizado",
+    finalizadoEn: new Date().toISOString(),
+    sync: navigator.onLine ? "sincronizado" : "pendiente",
   };
+
+  guardarReporte(final);
+  setData((d) => ({ ...d, borradorId: null }));
+  toast.success("Reporte finalizado y bloqueado");
+  navigate({ to: "/app/reporte/$id", params: { id: final.id } });
+};
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-5">
