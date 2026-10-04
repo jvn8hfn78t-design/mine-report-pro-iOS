@@ -87,53 +87,6 @@ const estados: EstadoEquipo[] = [
   </Link>
 </Button>
 
-      <section className="space-y-3">
-  <h2 className="text-sm font-semibold uppercase tracking-wide">
-    Estado de robots
-  </h2>
-
-  <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-    {estados.map((e) => (
-      <div key={e} className="rounded-lg border border-border bg-card p-4">
-        <p className="text-3xl font-black">{conteoRobots(e)}</p>
-
-        <span
-          className={`mt-2 inline-block rounded px-2 py-0.5 text-[11px] font-semibold ${ESTADO_CLASSES[e]}`}
-        >
-          {ESTADO_LABEL[e]}
-        </span>
-
-        <p className="mt-1 text-[11px] text-muted-foreground">
-          Último reporte
-        </p>
-      </div>
-    ))}
-  </div>
-</section>
-
-<section className="space-y-3">
-  <h2 className="text-sm font-semibold uppercase tracking-wide">
-    Estado de mixers
-  </h2>
-
-  <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-    {estados.map((e) => (
-      <div key={e} className="rounded-lg border border-border bg-card p-4">
-        <p className="text-3xl font-black">{conteoMixers(e)}</p>
-
-        <span
-          className={`mt-2 inline-block rounded px-2 py-0.5 text-[11px] font-semibold ${ESTADO_CLASSES[e]}`}
-        >
-          {ESTADO_LABEL[e]}
-        </span>
-
-        <p className="mt-1 text-[11px] text-muted-foreground">
-          Último reporte
-        </p>
-      </div>
-    ))}
-  </div>
-</section>
 
       <div className="rounded-lg border border-border bg-card">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
