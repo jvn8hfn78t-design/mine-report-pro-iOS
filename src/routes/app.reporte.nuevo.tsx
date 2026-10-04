@@ -62,7 +62,7 @@ const selectClass = "h-9 w-full rounded-md border border-input bg-background px-
 
 function Contadores({ estados }: { estados: EstadoEquipo[] }) {
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+    <div className="sticky top-2 z-20 grid grid-cols-2 gap-2 rounded-lg border border-border bg-card/95 p-1.5 shadow-sm backdrop-blur sm:grid-cols-4">
       {ESTADOS.map((e) => (
         <div key={e.value} className="rounded border border-border bg-background p-3 text-center">
           <p className="text-2xl font-black">{estados.filter((x) => x === e.value).length}</p>
