@@ -52,25 +52,40 @@ const estados: EstadoEquipo[] = [
       </div>
 
       {borrador ? (
-        <div className="rounded-lg border border-primary/50 bg-primary/10 p-4">
-          <p className="text-sm font-semibold">Tiene un reporte en curso</p>
-          <p className="text-xs text-muted-foreground">
-            {borrador.fecha} · Guardia {borrador.tipoGuardia === "dia" ? "Día" : "Noche"} ·{" "}
-            {nombreSupervisor(data, borrador.supervisorId)}
-          </p>
-          <Button asChild size="sm" className="mt-3">
-            <Link to="/app/reporte/nuevo" search={{ continuar: "1" }}>
-  Continuar reporte <ArrowRight className="ml-1 size-4" />
-</Link>
-          </Button>
-        </div>
-      ) : (
-        <Button asChild size="lg" className="w-full sm:w-auto">
-          <Link to="/app/reporte/nuevo">
-            <FilePlus2 className="mr-1 size-4" /> Nuevo reporte de guardia
-          </Link>
-        </Button>
-      )}
+  <div className="rounded-xl border border-primary/30 bg-card p-4 shadow-sm">
+    <div className="flex items-center gap-2">
+      <span className="text-lg">📝</span>
+      <p className="text-sm font-bold uppercase tracking-wide">
+        Reporte en curso
+      </p>
+    </div>
+
+    <div className="mt-3 space-y-1">
+      <p className="text-base font-semibold">
+        {borrador.correlativo} · Guardia{" "}
+        {borrador.tipoGuardia === "dia" ? "Día" : "Noche"}
+      </p>
+
+      <p className="text-sm text-muted-foreground">
+        Supervisor: {nombreSupervisor(data, borrador.supervisorId)}
+      </p>
+    </div>
+
+    <Button asChild size="lg" className="mt-4 w-full">
+      <Link to="/app/reporte/nuevo" search={{ continuar: "1" }}>
+        Continuar reporte
+        <ArrowRight className="ml-1 size-4" />
+      </Link>
+    </Button>
+  </div>
+) : null}
+
+<Button asChild variant="outline" size="lg" className="w-full">
+  <Link to="/app/reporte/nuevo">
+    <FilePlus2 className="mr-1 size-4" />
+    Iniciar nuevo reporte
+  </Link>
+</Button>
 
       <section className="space-y-3">
   <h2 className="text-sm font-semibold uppercase tracking-wide">
