@@ -122,10 +122,10 @@ export function getData(): OpsData {
       : [];
 
     cache = {
-  ...base,
-  ...guardado,
-  reportes: reportesGuardados,
-};
+      ...base,
+      ...guardado,
+      reportes: reportesGuardados,
+    };
 
     return cache;
   } catch {
