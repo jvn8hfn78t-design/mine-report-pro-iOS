@@ -59,9 +59,9 @@ const estados: EstadoEquipo[] = [
             {nombreSupervisor(data, borrador.supervisorId)}
           </p>
           <Button asChild size="sm" className="mt-3">
-            <Link to="/app/reporte/nuevo">
-              Continuar reporte <ArrowRight className="ml-1 size-4" />
-            </Link>
+            <Link to="/app/reporte/nuevo" search={{ continuar: "1" }}>
+  Continuar reporte <ArrowRight className="ml-1 size-4" />
+</Link>
           </Button>
         </div>
       ) : (
