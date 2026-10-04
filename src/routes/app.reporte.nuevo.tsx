@@ -102,13 +102,15 @@ function NuevoReporte() {
 
   // Autoguardado en el dispositivo
   useEffect(() => {
-    if (!rep) return;
-    const t = setTimeout(() => {
-      guardarReporte(rep);
-      setData((d) => ({ ...d, borradorId: rep.id }));
-    }, 400);
-    return () => clearTimeout(t);
-  }, [rep]);
+  if (!rep || rep.estado === "finalizado") return;
+
+  const t = setTimeout(() => {
+    guardarReporte(rep);
+    setData((d) => ({ ...d, borradorId: rep.id }));
+  }, 400);
+
+  return () => clearTimeout(t);
+}, [rep]);
 
   const robotsActivos = useMemo(() => data.robots.filter((r) => rep?.robots[r.id]), [data.robots, rep]);
   const mixersActivos = useMemo(() => data.mixers.filter((m) => rep?.mixers[m.id]), [data.mixers, rep]);
@@ -184,6 +186,11 @@ const robotsSinAditivo = robotsOperativos
 };
 
   const finalizar = () => {
+  if (rep.estado === "finalizado") {
+    toast.error("Este reporte ya fue finalizado.");
+    return;
+  }
+
   const e = validar();
   setErrores(e);
 
@@ -214,8 +221,11 @@ const robotsSinAditivo = robotsOperativos
   };
 
   guardarReporte(final);
-  setData((d) => ({ ...d, borradorId: null }));
-  toast.success("Reporte finalizado y bloqueado");
+setData((d) => ({
+  ...d,
+  borradorId: null,
+}));
+toast.success("Reporte finalizado y bloqueado");
   navigate({ to: "/app/reporte/$id", params: { id: final.id } });
 };
 
