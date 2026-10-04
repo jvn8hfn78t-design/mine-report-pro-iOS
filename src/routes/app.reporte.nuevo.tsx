@@ -225,7 +225,7 @@ const revisarPendientes = (): string[] => {
 
       <div className="space-y-5 rounded-lg border border-border bg-card p-4">
         {paso === 0 && (
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-3 rounded-lg border border-border bg-card p-3 sm:grid-cols-3">
             <div className="space-y-1">
               <Label>Fecha</Label>
               <Input type="date" value={rep.fecha} onChange={(e) => up({ fecha: e.target.value })} />
@@ -462,7 +462,8 @@ const revisarPendientes = (): string[] => {
     type="number"
     min="0"
     step="0.01"
-    value={l.cantidad}
+    value={l.cantidad === 0 ? "" : l.cantidad}
+placeholder="0"
     onChange={(e) =>
       up({
         lanzamientos: rep.lanzamientos.map((x) =>
@@ -594,7 +595,8 @@ const revisarPendientes = (): string[] => {
     type="number"
     min="0"
     step="0.01"
-    value={c.cantidad}
+    value={c.cantidad === 0 ? "" : c.cantidad}
+placeholder="0"
     onChange={(e) =>
       up({
         carguios: rep.carguios.map((x) =>
@@ -794,7 +796,8 @@ const revisarPendientes = (): string[] => {
                         type="number"
                         min={0}
                         step="0.1"
-                        value={d.cantidad}
+                        value={d.cantidad === 0 ? "" : d.cantidad}
+placeholder="0"
                         onChange={(e) => setD({ cantidad: Number(e.target.value) })}
                       />
                     </div>
