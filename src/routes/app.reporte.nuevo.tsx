@@ -233,10 +233,10 @@ const estadoPaso = (indice: number): "completo" | "pendiente" | "sin-registros" 
       return rep.fecha && rep.supervisorId ? "completo" : "pendiente";
 
     case 1:
-      return robotsActivos.every((r) => Boolean(rep.robots[r.id])) ? "completo" : "pendiente";
+  return rep.robotsRevisados ? "completo" : "pendiente";
 
-    case 2:
-      return mixersActivos.every((m) => Boolean(rep.mixers[m.id])) ? "completo" : "pendiente";
+case 2:
+  return rep.mixersRevisados ? "completo" : "pendiente";
 
     case 3: {
       const completo = robotsActivos.every((r) => {
@@ -1120,12 +1120,20 @@ placeholder="0"
         </Button>
 
         <Button
-          disabled={paso === PASOS.length - 1}
-          onClick={() => setPaso(paso + 1)}
-        >
-          Siguiente
-          <ArrowRight className="ml-1 size-4" />
-        </Button>
+  disabled={paso === PASOS.length - 1}
+  onClick={() => {
+    if (paso === 1) {
+      setRep({ ...rep, robotsRevisados: true });
+    } else if (paso === 2) {
+      setRep({ ...rep, mixersRevisados: true });
+    }
+
+    setPaso(paso + 1);
+  }}
+>
+  Siguiente
+  <ArrowRight className="ml-1 size-4" />
+</Button>
       </div>
       </>
       )}
