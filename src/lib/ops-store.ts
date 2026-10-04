@@ -88,7 +88,7 @@ const seedUsuarios: Usuario[] = [
 
 function seedReportes(): Reporte[] {
   const hoy = new Date();
-  const mk = (dias: number, tipo: "dia" | "noche", supervisorId: string, sync: "pendiente" | "sincronizado"): Reporte => {
+  const mk = (dias: number, tipo: "dia" | "noche", supervisorId: string): Reporte => {
     const d = new Date(hoy);
     d.setDate(d.getDate() - dias);
     const fecha = d.toISOString().slice(0, 10);
