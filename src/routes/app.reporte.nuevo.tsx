@@ -363,9 +363,22 @@ case 2:
             </p>
         <h1 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">{PASOS[paso]}</h1>
         <Progress value={((paso + 1) / PASOS.length) * 100} className="mt-3" />
-        <p className="mt-2 flex items-center gap-1 text-[11px] text-muted-foreground">
-          <Save className="size-3" /> Guardado automático en este dispositivo
-        </p>
+
+<div className="mt-3 flex items-center justify-between gap-2">
+  <Button
+    variant="outline"
+    size="sm"
+    onClick={() => setMostrarIndice(true)}
+  >
+    <span className="mr-2">☰</span>
+    Índice del reporte
+  </Button>
+
+  <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
+    <Save className="size-3" />
+    Guardado automático
+  </span>
+</div>
       </div>
 
       <div className="space-y-5 rounded-lg border border-border bg-card p-4">
@@ -1110,13 +1123,6 @@ placeholder="0"
         >
           <ArrowLeft className="mr-1 size-4" />
           Anterior
-        </Button>
-
-        <Button
-          variant="ghost"
-          onClick={() => setMostrarIndice(true)}
-        >
-          Índice
         </Button>
 
         <Button
