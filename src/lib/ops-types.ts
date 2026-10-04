@@ -93,6 +93,8 @@ export interface Reporte {
   fecha: string;
   tipoGuardia: "dia" | "noche";
   supervisorId: string;
+  robotsRevisados: boolean;
+  mixersRevisados: boolean;
   robots: Record<string, RobotDetalle>;
   mixers: Record<string, MixerDetalle>;
   lanzamientos: Lanzamiento[];
