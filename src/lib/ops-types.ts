@@ -101,7 +101,6 @@ export interface Reporte {
   desechos: Desecho[];
   observaciones: string;
   estado: EstadoReporte;
-  sync: EstadoSync;
   creadoEn: string;
   finalizadoEn: string | null;
 }
