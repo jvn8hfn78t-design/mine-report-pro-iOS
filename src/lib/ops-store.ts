@@ -175,12 +175,15 @@ carguios: [
       observaciones:
         "Guardia sin incidentes de seguridad. Se cumplió el programa de lanzamiento con 2 labores completadas.",
       estado: "finalizado",
-      sync,
       creadoEn: d.toISOString(),
       finalizadoEn: d.toISOString(),
     };
   };
-  return [mk(1, "dia", "us-01", "sincronizado"), mk(2, "noche", "us-02", "sincronizado"), mk(3, "dia", "us-04", "pendiente")];
+  return [
+  mk(1, "dia", "us-01"),
+  mk(2, "noche", "us-02"),
+  mk(3, "dia", "us-04"),
+];
 }
 
 function defaults(): OpsData {
@@ -313,13 +316,6 @@ export function eliminarReporte(id: string) {
     ...d,
     reportes: d.reportes.filter((r) => r.id !== id),
     borradorId: d.borradorId === id ? null : d.borradorId,
-  }));
-}
-
-export function marcarSincronizados() {
-  setData((d) => ({
-    ...d,
-    reportes: d.reportes.map((r) => (r.estado === "finalizado" ? { ...r, sync: "sincronizado" } : r)),
   }));
 }
 
