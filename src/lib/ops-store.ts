@@ -293,7 +293,6 @@ export function nuevoReporte(data: OpsData): Reporte {
     desechos: [],
     observaciones: "",
     estado: "borrador",
-    sync: "pendiente",
     creadoEn: new Date().toISOString(),
     finalizadoEn: null,
   };
