@@ -239,20 +239,40 @@ case 2:
   return rep.mixersRevisados ? "completo" : "pendiente";
 
     case 3: {
-      const completo = robotsActivos.every((r) => {
-        const det = detRobot(r.id);
-        const combustible = det.combustible.inicio || det.combustible.media || det.combustible.final;
-        return combustible && det.aditivo !== null;
-      });
+  const robotsOperativos = robotsActivos.filter(
+    (r) => rep.robots[r.id]?.estado === "operativo"
+  );
 
-      return completo ? "completo" : "pendiente";
-    }
+  if (robotsOperativos.length === 0) {
+    return "sin-registros";
+  }
+
+  const completo = robotsOperativos.every((r) => {
+    const det = detRobot(r.id);
+    const combustible =
+      det.combustible.inicio ||
+      det.combustible.media ||
+      det.combustible.final;
+
+    return combustible && det.aditivo !== null;
+  });
+
+  return completo ? "completo" : "pendiente";
+}
 
     case 4:
-      return rep.lanzamientos.length > 0 ? "completo" : "pendiente";
+  if (robotsOperativos.length === 0) {
+    return "sin-registros";
+  }
+
+  return rep.lanzamientos.length > 0 ? "completo" : "pendiente";
 
     case 5:
-      return rep.carguios.length > 0 ? "completo" : "pendiente";
+  if (mixersOperativos.length === 0) {
+    return "sin-registros";
+  }
+
+  return rep.carguios.length > 0 ? "completo" : "pendiente";
 
     case 6:
       return rep.fallas.length > 0 ? "completo" : "sin-registros";
@@ -261,10 +281,10 @@ case 2:
       return rep.desechos.length > 0 ? "completo" : "sin-registros";
 
     case 8:
-      return rep.observaciones.trim() ? "completo" : "pendiente";
+  return rep.observaciones.trim() ? "completo" : "sin-registros";
 
     case 9:
-      return validar().length === 0 ? "completo" : "pendiente";
+  return "pendiente";
 
     default:
       return "pendiente";
@@ -1115,7 +1135,7 @@ placeholder="0"
         )}
       </div>
 
-            <div className="mt-5 grid grid-cols-3 items-center gap-2">
+            <div className="mt-5 flex items-center justify-between gap-2">
         <Button
           variant="outline"
           disabled={paso === 0}
