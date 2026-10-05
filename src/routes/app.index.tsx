@@ -47,7 +47,7 @@ function Panel() {
 
   const equiposDetalle =
   detalle && borrador
-    ? Object.entries(borrador[detalle])
+    ? Object.values(borrador[detalle])
     : [];
 
   return (
