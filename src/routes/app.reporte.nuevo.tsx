@@ -83,9 +83,10 @@ function NuevoReporte() {
   const navigate = useNavigate();
   const { continuar } = Route.useSearch();
   const [rep, setRep] = useState<Reporte | null>(null);
-  const [paso, setPaso] = useState(0);
-  const [errores, setErrores] = useState<string[]>([]);
-  const [mostrarIndice, setMostrarIndice] = useState(false);
+const [paso, setPaso] = useState(0);
+const [errores, setErrores] = useState<string[]>([]);
+const [mostrarIndice, setMostrarIndice] = useState(false);
+const [guardadoLocal, setGuardadoLocal] = useState(true);
 
   useEffect(() => {
   const d = getData();
