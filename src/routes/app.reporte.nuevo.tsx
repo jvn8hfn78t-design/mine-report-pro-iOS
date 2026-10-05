@@ -1143,13 +1143,13 @@ case 2:
                   "Sin registros",
               },
               {
-                titulo: "Desechos / morteros",
-                paso: 7,
-                contenido:
-                  rep.desechos
-                    .map((d) => `${d.hora} ${d.tipo}: ${d.cantidad} ${d.unidad === "m3" ? "m³" : "kg"}`)
-                    .join(" · ") || "Sin registros",
-              },
+  titulo: "Desechos / morteros",
+  paso: 7,
+  contenido:
+    rep.desechos
+      .map((d) => `${d.hora} ${d.tipo}: ${d.cantidad} m³`)
+      .join(" · ") || "Sin registros",
+},
               { titulo: "Observaciones", paso: 8, contenido: rep.observaciones || "Sin observaciones" },
             ].map((s) => (
               <div key={s.titulo} className="rounded border border-border p-3">
