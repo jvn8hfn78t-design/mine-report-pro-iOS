@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import {
   getData,
   guardarReporte,
+  iniciarNuevaGuardia,
   nombreEquipo,
   nombreSupervisor,
   nuevoReporte,
