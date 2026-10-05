@@ -7,7 +7,7 @@ export const Route = createFileRoute("/app")({
 
 const nav = [
   { to: "/app", label: "Panel", icon: LayoutDashboard, exact: true },
-  { to: "/app/reporte/nuevo", label: "Nuevo", icon: FilePlus2 },
+  { to: "/app/reporte/nuevo", search: { continuar: "0" }, label: "Nuevo", icon: FilePlus2 },
   { to: "/app/historial", label: "Historial", icon: History },
   { to: "/app/catalogos", label: "Catálogos", icon: Boxes },
 ] as const;
