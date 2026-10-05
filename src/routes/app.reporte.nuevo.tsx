@@ -258,7 +258,17 @@ const robotsSinAditivo = robotsOperativos
     finalizadoEn: new Date().toISOString(),
   };
 
-  guardarReporte(final);
+  const guardado = guardarReporte(final);
+
+if (!guardado) {
+  setGuardadoLocal(false);
+  toast.error(
+    "No se pudo guardar el reporte final. No cierre la aplicación e inténtelo nuevamente.",
+  );
+  return;
+}
+
+setGuardadoLocal(true);
 toast.success("Reporte finalizado y bloqueado");
 navigate({ to: "/app/reporte/$id", params: { id: final.id } });
 };
