@@ -94,42 +94,52 @@ const [guardadoLocal, setGuardadoLocal] = useState(true);
     (r) => r.estado === "borrador",
   );
 
+  const continuarDesdeUrl =
+    continuar === true ||
+    continuar === "1" ||
+    (typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("continuar") === "1");
+
   // CONTINUAR: recuperar el reporte que está en curso
-  if (continuar && borrador) {
+  // Nunca debe mostrar la alerta ni crear una nueva guardia.
+  if (continuarDesdeUrl && borrador) {
     setRep(borrador);
     setMostrarIndice(true);
+    setGuardadoLocal(true);
     return;
   }
 
-    // INICIAR: confirmar antes de reemplazar un reporte en curso
+  // INICIAR: solamente aquí se permite reemplazar
+  // el reporte que está actualmente en curso.
   if (borrador) {
     const confirmar = window.confirm(
       "Ya existe un reporte en curso.\n\n" +
         "Si inicias una nueva guardia, el reporte actual se eliminará.\n\n" +
-        "¿Deseas iniciar una nueva guardia?"
+        "¿Deseas iniciar una nueva guardia?",
     );
 
     if (!confirmar) {
       setRep(borrador);
       setMostrarIndice(true);
+      setGuardadoLocal(true);
       return;
     }
   }
 
   try {
-  const nuevo = iniciarNuevaGuardia();
+    const nuevo = iniciarNuevaGuardia();
 
-  setRep(nuevo);
-  setMostrarIndice(false);
-  setGuardadoLocal(true);
-} catch (error) {
-  console.error("No se pudo iniciar la nueva guardia.", error);
-  setGuardadoLocal(false);
+    setRep(nuevo);
+    setMostrarIndice(false);
+    setGuardadoLocal(true);
+  } catch (error) {
+    console.error("No se pudo iniciar la nueva guardia.", error);
+    setGuardadoLocal(false);
 
-  toast.error(
-    "No se pudo guardar la nueva guardia en el dispositivo. Inténtelo nuevamente.",
-  );
-}
+    toast.error(
+      "No se pudo guardar la nueva guardia en el dispositivo. Inténtelo nuevamente.",
+    );
+  }
 }, [continuar]);
 
     // Autoguardado en el dispositivo
