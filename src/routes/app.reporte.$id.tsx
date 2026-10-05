@@ -178,7 +178,7 @@ const compartirPdf = async () => {
         {rep.carguios.length === 0 && <p className="text-muted-foreground">Sin registros.</p>}
         {rep.carguios.map((c) => (
           <p key={c.id} className="border-b border-border/60 pb-2">
-            <span className="font-mono text-xs text-primary">{c.hora}</span> · {nombreEquipo(data, c.mixerId)} ·{" "}
+            <span className="font-mono text-xs text-primary">{c.hora}</span> · {nombreEquipoSnapshot(c.mixerId)} ·{" "}
             {c.labor} · {c.cantidad} m³{" "}
 {c.notas && <span className="text-muted-foreground">({c.notas})</span>}
           </p>
@@ -190,7 +190,7 @@ const compartirPdf = async () => {
         {rep.fallas.map((f) => (
           <div key={f.id} className="border-b border-border/60 pb-2">
             <p>
-              <span className="font-mono text-xs text-primary">{f.hora}</span> · {nombreEquipo(data, f.equipoId)} ·{" "}
+              <span className="font-mono text-xs text-primary">{f.hora}</span> · {nombreEquipoSnapshot(f.equipoId)} ·{" "}
               {f.tipo} → {ESTADO_LABEL[f.estadoFinal]}
             </p>
             <p className="text-xs text-muted-foreground">
