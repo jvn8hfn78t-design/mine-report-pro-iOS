@@ -99,7 +99,7 @@ function Panel() {
             >
               <Link
                 to="/app/reporte/nuevo"
-                search={{ continuar: "1" }}
+                search={{ continuar: "true" }}
               >
                 Continuar reporte
                 <ArrowRight className="ml-1 size-4" />
