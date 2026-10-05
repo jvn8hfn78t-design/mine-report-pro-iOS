@@ -9,9 +9,9 @@ import { ESTADO_CLASSES, ESTADO_LABEL } from "@/lib/ops-types";
 export const Route = createFileRoute("/app/reporte/$id")({
   head: () => ({
     meta: [
-      { title: "Reporte de guardia | Guardia Ops" },
+      { title: "Reporte de guardia | MINE REPORT BATCH" },
       { name: "description", content: "Reporte de guardia finalizado con PDF descargable y opciones de compartir." },
-      { property: "og:title", content: "Reporte de guardia | Guardia Ops" },
+      { property: "og:title", content: "Reporte de guardia | MINE REPORT BATCH" },
       { property: "og:description", content: "Consulte el detalle de la guardia y comparta el PDF del reporte." },
     ],
   }),
