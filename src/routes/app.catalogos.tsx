@@ -11,12 +11,12 @@ import type { Equipo, Usuario } from "@/lib/ops-types";
 export const Route = createFileRoute("/app/catalogos")({
   head: () => ({
     meta: [
-      { title: "Catálogos de equipos y personal | Guardia Ops" },
+      { title: "Catálogos de equipos y personal | MINE REPORT BATCH" },
       {
         name: "description",
         content: "Administre robots lanzadores, mixers y supervisores disponibles para los reportes de guardia.",
       },
-      { property: "og:title", content: "Catálogos de equipos y personal | Guardia Ops" },
+      { property: "og:title", content: "Catálogos de equipos y personal | MINE REPORT BATCH" },
       { property: "og:description", content: "Robots, mixers y usuarios precargados y listos para editar." },
     ],
   }),
