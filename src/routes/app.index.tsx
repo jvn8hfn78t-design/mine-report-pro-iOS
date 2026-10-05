@@ -244,26 +244,26 @@ function Panel() {
             </div>
 
             <div className="divide-y divide-border">
-              {equiposDetalle.map((equipo) => (
-                <div
-                  key={equipo.id}
-                  className="flex items-center justify-between gap-3 px-4 py-3"
-                >
-                  <span className="text-sm font-medium">
-                    {equipo.codigo}
-                  </span>
+              {equiposDetalle.map(([equipoId, equipo]) => (
+  <div
+    key={equipoId}
+    className="flex items-center justify-between gap-3 px-4 py-3"
+  >
+    <span className="text-sm font-medium">
+      {equipoId}
+    </span>
 
-                  <span className="text-xs font-semibold text-muted-foreground">
-                    {equipo.estado === "operativo"
-                      ? "Operativo"
-                      : equipo.estado === "standby"
-                        ? "Standby"
-                        : equipo.estado === "mantenimiento"
-                          ? "Mantenimiento"
-                          : "Inoperativo"}
-                  </span>
-                </div>
-              ))}
+    <span className="text-xs font-semibold text-muted-foreground">
+      {equipo.estado === "operativo"
+        ? "Operativo"
+        : equipo.estado === "standby"
+          ? "Standby"
+          : equipo.estado === "mantenimiento"
+            ? "Mantenimiento"
+            : "Inoperativo"}
+    </span>
+  </div>
+))}
             </div>
           </div>
         )}
