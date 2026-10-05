@@ -32,7 +32,7 @@ import {
 
 export const Route = createFileRoute("/app/reporte/nuevo")({
   validateSearch: (search) => ({
-  continuar: search.continuar === true || search.continuar === "1",
+  continuar: search.continuar === "1",
 }),
   head: () => ({
     meta: [
