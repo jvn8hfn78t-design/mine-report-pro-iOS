@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { Boxes, FilePlus2, History, LayoutDashboard, HardHat } from "lucide-react";
+import { Boxes, FilePlus2, History, LayoutDashboard } from "lucide-react";
 
 export const Route = createFileRoute("/app")({
   component: AppLayout,
@@ -17,10 +17,9 @@ function AppLayout() {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="flex items-center justify-between border-b border-border px-4 py-3">
         <Link to="/" className="flex items-center gap-2">
-          <span className="grid size-8 place-items-center rounded bg-primary text-primary-foreground">
-            <HardHat className="size-4" />
-          </span>
-          <span className="text-sm font-bold uppercase tracking-widest">Guardia Ops</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+  MINE REPORT PRO
+</span>
         </Link>
         <nav className="hidden gap-1 sm:flex">
           {nav.map((n) => (
