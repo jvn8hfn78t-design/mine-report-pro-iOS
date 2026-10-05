@@ -10,10 +10,10 @@ export const Route = createFileRoute("/app/historial")({
       { title: "Historial de reportes | MINE REPORT BATCH" },
       {
         name: "description",
-        content: "Filtre reportes de guardia por fecha, tipo de guardia, supervisor y estado de sincronización.",
+        content: "Consulte los reportes de guardia registrados y descargue sus archivos PDF.",
       },
       { property: "og:title", content: "Historial de reportes | MINE REPORT BATCH" },
-      { property: "og:description", content: "Busque y descargue cualquier reporte de guardia registrado." },
+      { property: "og:description", content: "Consulte los reportes de guardia registrados y descargue sus archivos PDF." },
     ],
   }),
   component: Historial,
