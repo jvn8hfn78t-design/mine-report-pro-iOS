@@ -85,6 +85,7 @@ export function construirPdf(rep: Reporte, data: OpsData) {
   nombreEquipoSnapshot(id),
   ESTADO_LABEL[det.estado],
 ])
+);
 
   titulo("LANZAMIENTOS DE ROBOTS");
   seccion(
