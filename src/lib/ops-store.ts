@@ -244,12 +244,15 @@ mixers: Object.fromEntries(
   };
 }
 
-export function guardarReporte(rep: Reporte) {
-  setData((d) => {
+export function guardarReporte(rep: Reporte): boolean {
+  return setData((d) => {
     const existe = d.reportes.some((r) => r.id === rep.id);
+
     return {
       ...d,
-      reportes: existe ? d.reportes.map((r) => (r.id === rep.id ? rep : r)) : [rep, ...d.reportes],
+      reportes: existe
+        ? d.reportes.map((r) => (r.id === rep.id ? rep : r))
+        : [rep, ...d.reportes],
     };
   });
 }
