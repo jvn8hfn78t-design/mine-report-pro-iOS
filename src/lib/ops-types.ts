@@ -95,6 +95,8 @@ export interface Reporte {
   supervisorId: string;
   robotsRevisados: boolean;
   mixersRevisados: boolean;
+  robotsSnapshot: Record<string, Equipo>;
+  mixersSnapshot: Record<string, Equipo>;
   robots: Record<string, RobotDetalle>;
   mixers: Record<string, MixerDetalle>;
   lanzamientos: Lanzamiento[];
