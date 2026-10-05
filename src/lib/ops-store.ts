@@ -162,7 +162,6 @@ export function getData(): OpsData {
 
 export function setData(updater: (d: OpsData) => OpsData): boolean {
   const next = updater(getData());
-  cache = next;
 
   if (isBrowser()) {
     try {
@@ -173,7 +172,9 @@ export function setData(updater: (d: OpsData) => OpsData): boolean {
     }
   }
 
+  cache = next;
   listeners.forEach((l) => l());
+
   return true;
 }
 
