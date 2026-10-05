@@ -219,11 +219,9 @@ export function iniciarNuevaGuardia(): Reporte {
   const dataActual = getData();
 
   const dataLimpia: OpsData = {
-    ...dataActual,
-    reportes: dataActual.reportes.filter(
-      (r) => r.estado !== "borrador" && r.estado !== "finalizado",
-    ),
-  };
+  ...dataActual,
+  reportes: [],
+};
 
   const nuevo = nuevoReporte(dataLimpia);
 
