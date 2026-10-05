@@ -8,6 +8,18 @@ export function construirPdf(rep: Reporte, data: OpsData) {
   const doc = new jsPDF({ unit: "pt", format: "a4" });
   const ancho = doc.internal.pageSize.getWidth();
 
+  const nombreEquipoSnapshot = (id: string) => {
+    const equipo =
+      rep.robotsSnapshot[id] ??
+      rep.mixersSnapshot[id];
+
+    if (equipo) {
+      return `${equipo.codigo} · ${equipo.modelo}`;
+    }
+
+    return nombreEquipo(data, id);
+  };
+
   doc.setFillColor(28, 33, 43);
   doc.rect(0, 0, ancho, 90, "F");
   doc.setTextColor(245, 180, 60);
