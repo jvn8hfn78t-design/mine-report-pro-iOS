@@ -128,8 +128,21 @@ function NuevoReporte() {
   guardarReporte(rep);
 }, [rep]);
 
-  const robotsActivos = useMemo(() => data.robots.filter((r) => rep?.robots[r.id]), [data.robots, rep]);
-  const mixersActivos = useMemo(() => data.mixers.filter((m) => rep?.mixers[m.id]), [data.mixers, rep]);
+  const robotsActivos = useMemo(
+  () =>
+    rep
+      ? Object.values(rep.robotsSnapshot).filter((r) => rep.robots[r.id])
+      : [],
+  [rep],
+);
+
+const mixersActivos = useMemo(
+  () =>
+    rep
+      ? Object.values(rep.mixersSnapshot).filter((m) => rep.mixers[m.id])
+      : [],
+  [rep],
+);
 
   if (!rep) {
     return <div className="px-4 py-10 text-sm text-muted-foreground">Cargando reporte…</div>;
