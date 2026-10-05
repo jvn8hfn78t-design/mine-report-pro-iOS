@@ -90,9 +90,8 @@ const conteoMixers = (estado: EstadoEquipo) =>
   <div className="grid grid-cols-2 gap-3">
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <div className="flex items-center gap-2">
-        <span className="text-lg">🤖</span>
-        <p className="text-sm font-bold">ROBOTS</p>
-      </div>
+  <p className="text-sm font-bold">ROBOTS</p>
+</div>
 
       <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-semibold">
         <span>🟢 {conteoRobots("operativo")} OPER</span>
@@ -111,9 +110,8 @@ const conteoMixers = (estado: EstadoEquipo) =>
 
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <div className="flex items-center gap-2">
-        <span className="text-lg">🚜</span>
-        <p className="text-sm font-bold">MIXERS</p>
-      </div>
+  <p className="text-sm font-bold">MIXERS</p>
+</div>
 
       <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-semibold">
         <span>🟢 {conteoMixers("operativo")} OPER</span>
