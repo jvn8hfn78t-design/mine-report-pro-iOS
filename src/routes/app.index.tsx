@@ -46,9 +46,9 @@ function Panel() {
   };
 
   const equiposDetalle =
-    detalle && borrador
-      ? Object.values(borrador[detalle])
-      : [];
+  detalle && borrador
+    ? Object.entries(borrador[detalle])
+    : [];
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 px-4 py-6">
