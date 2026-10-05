@@ -287,6 +287,7 @@ if (!guardado) {
 }
 
 return nuevo;
+}
 
 export function nombreEquipo(data: OpsData, id: string) {
   const eq = [...data.robots, ...data.mixers].find((e) => e.id === id);
