@@ -81,7 +81,7 @@ export interface Desecho {
   hora: string;
   equipoId: string;
   cantidad: number;
-  unidad: "m3" | "kg";
+  unidad: "m3";
   descripcion: string;
 }
 
