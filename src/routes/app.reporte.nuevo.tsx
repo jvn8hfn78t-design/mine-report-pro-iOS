@@ -89,36 +89,21 @@ function NuevoReporte() {
 
   useEffect(() => {
   const d = getData();
-  const borrador = d.reportes.find((r) => r.estado === "borrador");
+  const borrador = d.reportes.find(
+    (r) => r.estado === "borrador",
+  );
 
+  // CONTINUAR: recuperar el reporte que está en curso
   if (continuar && borrador) {
     setRep(borrador);
     setMostrarIndice(true);
     return;
   }
 
-  const finalizados = d.reportes.filter(
-    (r) => r.estado === "finalizado",
-  );
+  // INICIAR: limpiar la guardia anterior y crear un reporte nuevo
+  const nuevo = iniciarNuevaGuardia();
 
-  const dataLimpia =
-    finalizados.length > 0
-      ? {
-          ...d,
-          reportes: d.reportes.filter(
-            (r) => r.estado !== "finalizado",
-          ),
-        }
-      : d;
-
-  if (finalizados.length > 0) {
-    window.localStorage.setItem(
-      "rog:data:v1",
-      JSON.stringify(dataLimpia),
-    );
-  }
-
-  setRep(nuevoReporte(dataLimpia));
+  setRep(nuevo);
   setMostrarIndice(false);
 }, [continuar]);
 
