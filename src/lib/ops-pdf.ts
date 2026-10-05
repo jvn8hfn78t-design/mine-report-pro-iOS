@@ -84,7 +84,7 @@ export function construirPdf(rep: Reporte, data: OpsData) {
     Object.entries(rep.mixers).map(([id, det]) => [
   nombreEquipoSnapshot(id),
   ESTADO_LABEL[det.estado],
-])
+]),
 );
 
   titulo("LANZAMIENTOS DE ROBOTS");
