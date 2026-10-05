@@ -74,7 +74,7 @@ export function construirPdf(rep: Reporte, data: OpsData) {
 
 
   seccion(
-    "robots",
+    "ESTADO DE ROBOTS LANZADORES",
     ["Equipo", "Estado", "Combustible", "Aditivo"],
     Object.entries(rep.robots).map(([id, det]) => [
   nombreEquipoSnapshot(id),
