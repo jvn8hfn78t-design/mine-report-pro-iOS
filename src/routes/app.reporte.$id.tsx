@@ -43,7 +43,19 @@ function DetalleReporte() {
     );
   }
 
-  const resumenTexto = `Reporte de guardia ${rep.correlativo}
+  const nombreEquipoSnapshot = (id: string) => {
+  const equipo =
+    rep.robotsSnapshot[id] ??
+    rep.mixersSnapshot[id];
+
+  if (equipo) {
+    return `${equipo.codigo} · ${equipo.modelo}`;
+  }
+
+  return nombreEquipo(data, id);
+};
+
+const resumenTexto = `Reporte de guardia ${rep.correlativo}
 Fecha: ${rep.fecha} (${rep.tipoGuardia === "dia" ? "Día" : "Noche"})
 Supervisor: ${nombreSupervisor(data, rep.supervisorId)}`;
 
