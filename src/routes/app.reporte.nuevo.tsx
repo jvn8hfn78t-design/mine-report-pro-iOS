@@ -32,8 +32,8 @@ import {
 
 export const Route = createFileRoute("/app/reporte/nuevo")({
   validateSearch: (search) => ({
-    continuar: search.continuar === "1",
-  }),
+  continuar: search.continuar === true || search.continuar === "1",
+}),
   head: () => ({
     meta: [
       { title: "Nuevo reporte de guardia | MINE REPORT BATCH" },
