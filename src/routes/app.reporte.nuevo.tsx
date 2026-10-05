@@ -100,7 +100,21 @@ function NuevoReporte() {
     return;
   }
 
-  // INICIAR: limpiar la guardia anterior y crear un reporte nuevo
+    // INICIAR: confirmar antes de reemplazar un reporte en curso
+  if (borrador) {
+    const confirmar = window.confirm(
+      "Ya existe un reporte en curso.\n\n" +
+        "Si inicias una nueva guardia, el reporte actual se eliminará.\n\n" +
+        "¿Deseas iniciar una nueva guardia?"
+    );
+
+    if (!confirmar) {
+      setRep(borrador);
+      setMostrarIndice(true);
+      return;
+    }
+  }
+
   const nuevo = iniciarNuevaGuardia();
 
   setRep(nuevo);
