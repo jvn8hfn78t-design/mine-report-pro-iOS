@@ -122,10 +122,10 @@ function Panel() {
         >
           <Link
   to="/app/reporte/nuevo"
-  search={{ continuar: "0" }}
+  search={{ continuar: true }}
 >
-  <FilePlus2 className="mr-1 size-4" />
-  Iniciar reporte
+  Continuar reporte
+  <ArrowRight className="ml-1 size-4" />
 </Link>
         </Button>
       </section>
