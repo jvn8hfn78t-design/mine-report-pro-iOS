@@ -36,12 +36,12 @@ export const Route = createFileRoute("/app/reporte/nuevo")({
   }),
   head: () => ({
     meta: [
-      { title: "Nuevo reporte de guardia | Guardia Ops" },
+      { title: "Nuevo reporte de guardia | MINE REPORT BATCH" },
       {
         name: "description",
         content: "Flujo guiado paso a paso para registrar la guardia: equipos, combustible, lanzamientos y fallas.",
       },
-      { property: "og:title", content: "Nuevo reporte de guardia | Guardia Ops" },
+      { property: "og:title", content: "Nuevo reporte de guardia | MINE REPORT BATCH" },
       { property: "og:description", content: "Registre la guardia paso a paso, incluso sin conexión." },
     ],
   }),
