@@ -121,19 +121,27 @@ export function getData(): OpsData {
       ? guardado.reportes
       : [];
 
+        const robotsActuales = Array.isArray(guardado.robots)
+      ? guardado.robots
+      : base.robots;
+
+    const mixersActuales = Array.isArray(guardado.mixers)
+      ? guardado.mixers
+      : base.mixers;
+
     const reportesCompatibles = reportesGuardados.map((reporte) => ({
       ...reporte,
       robotsSnapshot:
         reporte.robotsSnapshot ??
         Object.fromEntries(
-          data.robots
+          robotsActuales
             .filter((r) => r.activo)
             .map((r) => [r.id, { ...r }]),
         ),
       mixersSnapshot:
         reporte.mixersSnapshot ??
         Object.fromEntries(
-          data.mixers
+          mixersActuales
             .filter((m) => m.activo)
             .map((m) => [m.id, { ...m }]),
         ),
