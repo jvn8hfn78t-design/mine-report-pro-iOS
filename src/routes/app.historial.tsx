@@ -44,45 +44,6 @@ function Historial() {
         <p className="text-sm text-muted-foreground">{filtrados.length} reporte(s) encontrados</p>
       </div>
 
-      <div className="grid gap-3 rounded-lg border border-border bg-card p-4 sm:grid-cols-3 lg:grid-cols-5">
-        <div className="space-y-1">
-          <Label className="text-xs">Desde</Label>
-          <Input type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
-        </div>
-        <div className="space-y-1">
-          <Label className="text-xs">Hasta</Label>
-          <Input type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
-        </div>
-        <div className="space-y-1">
-          <Label className="text-xs">Guardia</Label>
-          <select
-            value={guardia}
-            onChange={(e) => setGuardia(e.target.value)}
-            className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-          >
-            <option value="todas">Todas</option>
-            <option value="dia">Día</option>
-            <option value="noche">Noche</option>
-          </select>
-        </div>
-        <div className="space-y-1">
-          <Label className="text-xs">Supervisor</Label>
-          <select
-            value={supervisor}
-            onChange={(e) => setSupervisor(e.target.value)}
-            className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-          >
-            <option value="todos">Todos</option>
-            {data.usuarios.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="space-y-1">
-        </div>
-      </div>
 
       <ul className="space-y-3">
         {filtrados.length === 0 && (
