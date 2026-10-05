@@ -160,17 +160,21 @@ export function getData(): OpsData {
   }
 }
 
-export function setData(updater: (d: OpsData) => OpsData) {
+export function setData(updater: (d: OpsData) => OpsData): boolean {
   const next = updater(getData());
   cache = next;
+
   if (isBrowser()) {
     try {
       window.localStorage.setItem(KEY, JSON.stringify(next));
-    } catch {
-      /* almacenamiento lleno */
+    } catch (error) {
+      console.error("No se pudo guardar la información localmente.", error);
+      return false;
     }
   }
+
   listeners.forEach((l) => l());
+  return true;
 }
 
 export function useOpsData(): OpsData {
