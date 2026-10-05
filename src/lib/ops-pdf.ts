@@ -100,7 +100,7 @@ export function construirPdf(rep: Reporte, data: OpsData) {
 ],
 rep.lanzamientos.map((l) => [
   l.hora,
-  nombreEquipo(data, l.robotId),
+  nombreEquipoSnapshot(l.robotId),
   l.labor,
   l.cantidad,
   "m³",
