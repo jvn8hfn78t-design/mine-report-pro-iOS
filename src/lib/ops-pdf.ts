@@ -134,13 +134,13 @@ rep.carguios.map((c) => [
     "fallas",
     ["Hora", "Equipo", "Tipo", "Descripción", "Acción tomada", "Estado final"],
     rep.fallas.map((f) => [
-      f.hora,
-      nombreEquipo(data, f.equipoId),
-      f.tipo,
-      f.descripcion,
-      f.accion,
-      ESTADO_LABEL[f.estadoFinal],
-    ]),
+  f.hora,
+  nombreEquipoSnapshot(f.equipoId),
+  f.tipo,
+  f.descripcion,
+  f.accion,
+  ESTADO_LABEL[f.estadoFinal],
+]),
   );
 
   titulo("DESECHOS / MORTEROS");
