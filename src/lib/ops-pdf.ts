@@ -72,14 +72,7 @@ export function construirPdf(rep: Reporte, data: OpsData) {
     }
   };
 
-  const titulo = (t: string) => {
-    doc.setFontSize(11);
-    doc.setTextColor(30, 30, 30);
-    doc.text(t, 40, y);
-    y += 10;
-  };
 
-  titulo("ESTADO DE ROBOTS LANZADORES");
   seccion(
     "robots",
     ["Equipo", "Estado", "Combustible", "Aditivo"],
@@ -93,7 +86,6 @@ export function construirPdf(rep: Reporte, data: OpsData) {
     ]),
   );
 
-  titulo("ESTADO DE MIXERS");
   seccion(
     "mixers",
     ["Equipo", "Estado"],
@@ -103,7 +95,6 @@ export function construirPdf(rep: Reporte, data: OpsData) {
 ]),
 );
 
-  titulo("LANZAMIENTOS DE ROBOTS");
   seccion(
     "lanzamientos",
     [
@@ -124,7 +115,6 @@ rep.lanzamientos.map((l) => [
 ]),
   );
 
-  titulo("CARGUÍO DE MIXERS");
   seccion(
     "carguios",
     [
@@ -145,7 +135,6 @@ rep.carguios.map((c) => [
 ]),
   );
 
-  titulo("FALLAS REPORTADAS");
   seccion(
     "fallas",
     ["Hora", "Equipo", "Tipo", "Descripción", "Acción tomada", "Estado final"],
@@ -159,7 +148,6 @@ rep.carguios.map((c) => [
 ]),
   );
 
-  titulo("DESECHOS / MORTEROS");
   seccion(
     "desechos",
     ["Hora", "Tipo", "Equipo", "Cantidad", "Descripción"],
