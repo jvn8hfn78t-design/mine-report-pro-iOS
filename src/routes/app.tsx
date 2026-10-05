@@ -55,6 +55,10 @@ function AppLayout() {
           </Link>
         ))}
       </nav>
+      
+      <footer className="border-t border-border px-4 py-3 text-center text-[10px] text-muted-foreground">
+        Creado por Brayan Alexander Toscano Chavez
+      </footer>
     </div>
   );
 }
