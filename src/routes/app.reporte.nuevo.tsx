@@ -81,7 +81,6 @@ function Contadores({ estados }: { estados: EstadoEquipo[] }) {
 function NuevoReporte() {
   const data = useOpsData();
   const navigate = useNavigate();
-  const { continuar } = Route.useSearch();
   const [rep, setRep] = useState<Reporte | null>(null);
 const [paso, setPaso] = useState(0);
 const [errores, setErrores] = useState<string[]>([]);
@@ -95,12 +94,10 @@ const [guardadoLocal, setGuardadoLocal] = useState(true);
   );
 
   const continuarDesdeUrl =
-    continuar === true ||
-    continuar === "1" ||
-    (typeof window !== "undefined" &&
-      new URLSearchParams(window.location.search).get("continuar") === "1");
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("continuar") === "1";
 
-  // CONTINUAR: recuperar el reporte que está en curso
+  // CONTINUAR: recuperar el reporte que está en curso.
   // Nunca debe mostrar la alerta ni crear una nueva guardia.
   if (continuarDesdeUrl && borrador) {
     setRep(borrador);
@@ -140,7 +137,7 @@ const [guardadoLocal, setGuardadoLocal] = useState(true);
       "No se pudo guardar la nueva guardia en el dispositivo. Inténtelo nuevamente.",
     );
   }
-}, [continuar]);
+}, []);
 
     // Autoguardado en el dispositivo
   useEffect(() => {
