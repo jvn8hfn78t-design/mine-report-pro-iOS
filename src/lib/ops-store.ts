@@ -215,6 +215,41 @@ export function eliminarReporte(id: string) {
   }));
 }
 
+export function iniciarNuevaGuardia(): Reporte {
+  const dataActual = getData();
+
+  const dataLimpia: OpsData = {
+    ...dataActual,
+    reportes: dataActual.reportes.filter(
+      (r) => r.estado !== "borrador" && r.estado !== "finalizado",
+    ),
+  };
+
+  const nuevo = nuevoReporte(dataLimpia);
+
+  const siguiente: OpsData = {
+    ...dataLimpia,
+    reportes: [nuevo],
+  };
+
+  cache = siguiente;
+
+  if (isBrowser()) {
+    try {
+      window.localStorage.setItem(
+        KEY,
+        JSON.stringify(siguiente),
+      );
+    } catch {
+      /* almacenamiento lleno */
+    }
+  }
+
+  listeners.forEach((l) => l());
+
+  return nuevo;
+}
+
 export function nombreEquipo(data: OpsData, id: string) {
   const eq = [...data.robots, ...data.mixers].find((e) => e.id === id);
   return eq ? `${eq.codigo} · ${eq.modelo}` : id;
