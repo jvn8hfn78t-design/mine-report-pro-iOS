@@ -669,21 +669,26 @@ case 2:
 <div className="space-y-1">
   <Label className="text-xs">Cantidad</Label>
   <Input
-    type="number"
-    min="0"
-    step="0.01"
-    value={l.cantidad === 0 ? "" : l.cantidad}
-placeholder="0"
-    onChange={(e) =>
-      up({
-        lanzamientos: rep.lanzamientos.map((x) =>
-          x.id === l.id
-            ? { ...x, cantidad: Number(e.target.value) }
-            : x,
-        ),
-      })
-    }
-  />
+  type="number"
+  min="0"
+  step="0.01"
+  value={l.cantidad === 0 ? "" : l.cantidad}
+  placeholder="0"
+  onChange={(e) => {
+    const valor = e.target.value;
+
+    up({
+      lanzamientos: rep.lanzamientos.map((x) =>
+        x.id === l.id
+          ? {
+              ...x,
+              cantidad: valor === "" ? 0 : Number(valor),
+            }
+          : x,
+      ),
+    });
+  }}
+/>
 </div>
 
 <div className="space-y-1">
@@ -802,21 +807,26 @@ placeholder="0"
 <div className="space-y-1">
   <Label className="text-xs">Cantidad</Label>
   <Input
-    type="number"
-    min="0"
-    step="0.01"
-    value={c.cantidad === 0 ? "" : c.cantidad}
-placeholder="0"
-    onChange={(e) =>
-      up({
-        carguios: rep.carguios.map((x) =>
-          x.id === c.id
-            ? { ...x, cantidad: Number(e.target.value) }
-            : x,
-        ),
-      })
-    }
-  />
+  type="number"
+  min="0"
+  step="0.01"
+  value={c.cantidad === 0 ? "" : c.cantidad}
+  placeholder="0"
+  onChange={(e) => {
+    const valor = e.target.value;
+
+    up({
+      carguios: rep.carguios.map((x) =>
+        x.id === c.id
+          ? {
+              ...x,
+              cantidad: valor === "" ? 0 : Number(valor),
+            }
+          : x,
+      ),
+    });
+  }}
+/>
 </div>
 
 <div className="space-y-1">
@@ -999,30 +1009,23 @@ placeholder="0"
                       ))}
                     </select>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-1">
-                      <Label className="text-xs">Cantidad</Label>
-                      <Input
-                        type="number"
-                        min={0}
-                        step="0.1"
-                        value={d.cantidad === 0 ? "" : d.cantidad}
-placeholder="0"
-                        onChange={(e) => setD({ cantidad: Number(e.target.value) })}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-xs">Unidad</Label>
-                      <select
-                        className={selectClass}
-                        value={d.unidad}
-                        onChange={(e) => setD({ unidad: e.target.value as "m3" | "kg" })}
-                      >
-                        <option value="m3">m³</option>
-                        <option value="kg">kg</option>
-                      </select>
-                    </div>
-                  </div>
+                  <div className="space-y-1">
+  <Label className="text-xs">Cantidad (m³)</Label>
+  <Input
+    type="number"
+    min={0}
+    step="0.01"
+    value={d.cantidad === 0 ? "" : d.cantidad}
+    placeholder="0"
+    onChange={(e) => {
+      const valor = e.target.value;
+
+      setD({
+        cantidad: valor === "" ? 0 : Number(valor),
+      });
+    }}
+  />
+</div>
                   <div className="space-y-1 sm:col-span-2">
                     <Label className="text-xs">Descripción</Label>
                     <Textarea rows={2} value={d.descripcion} onChange={(e) => setD({ descripcion: e.target.value })} />
