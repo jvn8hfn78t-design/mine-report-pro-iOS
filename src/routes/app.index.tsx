@@ -120,10 +120,13 @@ function Panel() {
           size="lg"
           className="w-full"
         >
-          <Link to="/app/reporte/nuevo">
-            <FilePlus2 className="mr-1 size-4" />
-            Iniciar reporte
-          </Link>
+          <Link
+  to="/app/reporte/nuevo"
+  search={{ continuar: "0" }}
+>
+  <FilePlus2 className="mr-1 size-4" />
+  Iniciar reporte
+</Link>
         </Button>
       </section>
 
