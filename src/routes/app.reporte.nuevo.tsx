@@ -122,18 +122,20 @@ const [guardadoLocal, setGuardadoLocal] = useState(true);
   setMostrarIndice(false);
 }, [continuar]);
 
-  // Autoguardado en el dispositivo
+    // Autoguardado en el dispositivo
   useEffect(() => {
-  if (!rep || rep.estado === "finalizado") return;
+    if (!rep || rep.estado === "finalizado") return;
 
-  const guardado = guardarReporte(rep);
+    const guardado = guardarReporte(rep);
 
-  if (!guardado) {
-    console.error(
-      "No se pudo guardar el reporte localmente. Los cambios actuales podrían perderse al cerrar la aplicación.",
-    );
-  }
-}, [rep]);
+    setGuardadoLocal(guardado);
+
+    if (!guardado) {
+      console.error(
+        "No se pudo guardar el reporte localmente. Los cambios actuales podrían perderse al cerrar la aplicación.",
+      );
+    }
+  }, [rep]);
 
   const robotsActivos = useMemo(
   () =>
