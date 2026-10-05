@@ -117,14 +117,32 @@ export function getData(): OpsData {
     const guardado = JSON.parse(raw) as Partial<OpsData>;
     const base = defaults();
 
-    const reportesGuardados = Array.isArray(guardado.reportes)
+        const reportesGuardados = Array.isArray(guardado.reportes)
       ? guardado.reportes
       : [];
+
+    const reportesCompatibles = reportesGuardados.map((reporte) => ({
+      ...reporte,
+      robotsSnapshot:
+        reporte.robotsSnapshot ??
+        Object.fromEntries(
+          data.robots
+            .filter((r) => r.activo)
+            .map((r) => [r.id, { ...r }]),
+        ),
+      mixersSnapshot:
+        reporte.mixersSnapshot ??
+        Object.fromEntries(
+          data.mixers
+            .filter((m) => m.activo)
+            .map((m) => [m.id, { ...m }]),
+        ),
+    }));
 
     cache = {
       ...base,
       ...guardado,
-      reportes: reportesGuardados,
+      reportes: reportesCompatibles,
     };
 
     return cache;
