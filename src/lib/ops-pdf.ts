@@ -133,12 +133,12 @@ rep.carguios.map((c) => [
     "desechos",
     ["Hora", "Tipo", "Equipo", "Cantidad", "Descripción"],
     rep.desechos.map((d) => [
-      d.hora,
-      d.tipo,
-      nombreEquipo(data, d.equipoId),
-      `${d.cantidad} ${d.unidad === "m3" ? "m³" : "kg"}`,
-      d.descripcion,
-    ]),
+  d.hora,
+  d.tipo,
+  nombreEquipo(data, d.equipoId),
+  `${d.cantidad} m³`,
+  d.descripcion,
+]),
   );
 
   titulo("OBSERVACIONES GENERALES");
