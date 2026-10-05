@@ -268,31 +268,16 @@ export function iniciarNuevaGuardia(): Reporte {
   const dataActual = getData();
 
   const dataLimpia: OpsData = {
-  ...dataActual,
-  reportes: [],
-};
+    ...dataActual,
+    reportes: [],
+  };
 
   const nuevo = nuevoReporte(dataLimpia);
 
-  const siguiente: OpsData = {
-    ...dataLimpia,
+  setData((d) => ({
+    ...d,
     reportes: [nuevo],
-  };
-
-  cache = siguiente;
-
-  if (isBrowser()) {
-    try {
-      window.localStorage.setItem(
-        KEY,
-        JSON.stringify(siguiente),
-      );
-    } catch {
-      /* almacenamiento lleno */
-    }
-  }
-
-  listeners.forEach((l) => l());
+  }));
 
   return nuevo;
 }
