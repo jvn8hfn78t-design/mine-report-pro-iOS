@@ -160,7 +160,10 @@ rep.carguios.map((c) => [
 ]),
   );
 
-    titulo("OBSERVACIONES GENERALES");
+    doc.setFontSize(11);
+doc.setTextColor(30, 30, 30);
+doc.text("OBSERVACIONES GENERALES", 40, y);
+y += 10;
 
   doc.setFontSize(9);
   doc.setTextColor(60, 60, 60);
