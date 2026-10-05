@@ -81,8 +81,10 @@ export function construirPdf(rep: Reporte, data: OpsData) {
   seccion(
     "mixers",
     ["Equipo", "Estado"],
-    Object.entries(rep.mixers).map(([id, det]) => [nombreEquipo(data, id), ESTADO_LABEL[det.estado]]),
-  );
+    Object.entries(rep.mixers).map(([id, det]) => [
+  nombreEquipoSnapshot(id),
+  ESTADO_LABEL[det.estado],
+])
 
   titulo("LANZAMIENTOS DE ROBOTS");
   seccion(
