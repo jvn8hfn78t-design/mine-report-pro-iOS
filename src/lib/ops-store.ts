@@ -178,15 +178,31 @@ export function nuevoReporte(data: OpsData): Reporte {
     supervisorId: "",
 robotsRevisados: false,
 mixersRevisados: false,
+robotsSnapshot: Object.fromEntries(
+  data.robots
+    .filter((r) => r.activo)
+    .map((r) => [r.id, { ...r }]),
+),
+mixersSnapshot: Object.fromEntries(
+  data.mixers
+    .filter((m) => m.activo)
+    .map((m) => [m.id, { ...m }]),
+),
 robots: Object.fromEntries(
-      data.robots.filter((r) => r.activo).map((r) => [
-        r.id,
-        { estado: "operativo", combustible: { inicio: false, media: false, final: false }, aditivo: null } as RobotDetalle,
-      ]),
-    ),
-    mixers: Object.fromEntries(
-      data.mixers.filter((m) => m.activo).map((m) => [m.id, { estado: "operativo" } as MixerDetalle]),
-    ),
+  data.robots.filter((r) => r.activo).map((r) => [
+    r.id,
+    {
+      estado: "operativo",
+      combustible: { inicio: false, media: false, final: false },
+      aditivo: null,
+    } as RobotDetalle,
+  ]),
+),
+mixers: Object.fromEntries(
+  data.mixers
+    .filter((m) => m.activo)
+    .map((m) => [m.id, { estado: "operativo" } as MixerDetalle]),
+),
     lanzamientos: [],
     carguios: [],
     fallas: [],
