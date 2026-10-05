@@ -250,7 +250,7 @@ function Panel() {
     className="flex items-center justify-between gap-3 px-4 py-3"
   >
     <span className="text-sm font-medium">
-      {equipoId}
+      {equipoId.toUpperCase()}
     </span>
 
     <span className="text-xs font-semibold text-muted-foreground">
