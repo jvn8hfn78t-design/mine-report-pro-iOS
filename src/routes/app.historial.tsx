@@ -26,14 +26,16 @@ function Historial() {
     <div className="mx-auto max-w-5xl space-y-5 px-4 py-6">
       <div>
         <h1 className="text-2xl font-bold uppercase tracking-tight">Historial de reportes</h1>
-        <p className="text-sm text-muted-foreground">{data.reportes.length} reporte(s) encontrados
+        <p className="text-sm text-muted-foreground">
+  {data.reportes.length} reporte(s) encontrados
+</p>
       </div>
 
 
       <ul className="space-y-3">
         {data.reportes.length === 0 && (
           <li className="rounded-lg border border-border bg-card px-4 py-8 text-center text-sm text-muted-foreground">
-            No hay reportes con esos filtros.
+            No hay reportes registrados.
           </li>
         )}
         {data.reportes.map((r) => (
