@@ -1,6 +1,5 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { Boxes, FilePlus2, History, LayoutDashboard, HardHat } from "lucide-react";
-import { BannerConexion } from "@/components/BannerConexion";
 
 export const Route = createFileRoute("/app")({
   component: AppLayout,
@@ -16,7 +15,6 @@ const nav = [
 function AppLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <BannerConexion />
       <header className="flex items-center justify-between border-b border-border px-4 py-3">
         <Link to="/" className="flex items-center gap-2">
           <span className="grid size-8 place-items-center rounded bg-primary text-primary-foreground">
