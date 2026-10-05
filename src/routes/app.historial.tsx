@@ -10,12 +10,12 @@ import { getData, nombreSupervisor, useOpsData } from "@/lib/ops-store";
 export const Route = createFileRoute("/app/historial")({
   head: () => ({
     meta: [
-      { title: "Historial de reportes | Guardia Ops" },
+      { title: "Historial de reportes | MINE REPORT BATCH" },
       {
         name: "description",
         content: "Filtre reportes de guardia por fecha, tipo de guardia, supervisor y estado de sincronización.",
       },
-      { property: "og:title", content: "Historial de reportes | Guardia Ops" },
+      { property: "og:title", content: "Historial de reportes | MINE REPORT BATCH" },
       { property: "og:description", content: "Busque y descargue cualquier reporte de guardia registrado." },
     ],
   }),
