@@ -1143,7 +1143,7 @@ case 2:
   rep.lanzamientos
     .map(
       (l) =>
-        `${l.hora} ${nombreEquipo(data, l.robotId)}: ${l.labor} · ${l.cantidad} m³`,
+        `${l.hora} ${rep.robotsSnapshot[l.robotId]?.codigo ?? l.robotId}: ${l.labor} · ${l.cantidad} m³`,
     )
     .join(" · ") || "Sin registros",
               },
@@ -1154,7 +1154,7 @@ case 2:
   rep.carguios
     .map(
       (c) =>
-        `${c.hora} ${nombreEquipo(data, c.mixerId)}: ${c.labor} · ${c.cantidad} m³`,
+        `${c.hora} ${rep.mixersSnapshot[c.mixerId]?.codigo ?? c.mixerId}: ${c.labor} · ${c.cantidad} m³`,
     )
     .join(" · ") || "Sin registros",
               },
