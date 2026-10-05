@@ -18,7 +18,7 @@ function AppLayout() {
       <header className="flex items-center justify-between border-b border-border px-4 py-3">
         <Link to="/" className="flex items-center gap-2">
           <span className="text-sm font-bold uppercase tracking-widest">
-  MINE REPORT PRO
+  MINE REPORT BATCH
 </span>
         </Link>
         <nav className="hidden gap-1 sm:flex">
