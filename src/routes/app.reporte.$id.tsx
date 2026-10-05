@@ -204,10 +204,10 @@ const compartirPdf = async () => {
         {rep.desechos.length === 0 && <p className="text-muted-foreground">Sin registros.</p>}
         {rep.desechos.map((d) => (
           <p key={d.id} className="border-b border-border/60 pb-2">
-            <span className="font-mono text-xs text-primary">{d.hora}</span> · {d.tipo} · {nombreEquipo(data, d.equipoId)}{" "}
-            · {d.cantidad} {d.unidad === "m3" ? "m³" : "kg"}{" "}
-            {d.descripcion && <span className="text-muted-foreground">({d.descripcion})</span>}
-          </p>
+  <span className="font-mono text-xs text-primary">{d.hora}</span> · {d.tipo} · {nombreEquipoSnapshot(d.equipoId)}{" "}
+  · {d.cantidad} m³{" "}
+  {d.descripcion && <span className="text-muted-foreground">({d.descripcion})</span>}
+</p>
         ))}
       </Seccion>
 
