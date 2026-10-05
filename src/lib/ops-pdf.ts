@@ -68,8 +68,8 @@ export function construirPdf(rep: Reporte, data: OpsData) {
     "robots",
     ["Equipo", "Estado", "Combustible", "Aditivo"],
     Object.entries(rep.robots).map(([id, det]) => [
-      nombreEquipo(data, id),
-      ESTADO_LABEL[det.estado],
+  nombreEquipoSnapshot(id),
+  ESTADO_LABEL[det.estado],
       [det.combustible.inicio && "Inicio", det.combustible.media && "Media", det.combustible.final && "Final"]
         .filter(Boolean)
         .join(", ") || "No registrado",
