@@ -150,7 +150,7 @@ rep.carguios.map((c) => [
     rep.desechos.map((d) => [
   d.hora,
   d.tipo,
-  nombreEquipo(data, d.equipoId),
+  nombreEquipoSnapshot(d.equipoId),
   `${d.cantidad} m³`,
   d.descripcion,
 ]),
