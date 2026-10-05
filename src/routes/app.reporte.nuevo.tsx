@@ -125,7 +125,13 @@ function NuevoReporte() {
   useEffect(() => {
   if (!rep || rep.estado === "finalizado") return;
 
-  guardarReporte(rep);
+  const guardado = guardarReporte(rep);
+
+  if (!guardado) {
+    console.error(
+      "No se pudo guardar el reporte localmente. Los cambios actuales podrían perderse al cerrar la aplicación.",
+    );
+  }
 }, [rep]);
 
   const robotsActivos = useMemo(
