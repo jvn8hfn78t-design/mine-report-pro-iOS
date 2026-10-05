@@ -135,7 +135,7 @@ const compartirPdf = async () => {
       <Seccion titulo="Estado de robots">
         {Object.entries(rep.robots).map(([rid, det]) => (
           <div key={rid} className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-2">
-            <span>{nombreEquipo(data, rid)}</span>
+            <span>{nombreEquipoSnapshot(rid)}</span>
             <span className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">
                 Comb.{" "}
