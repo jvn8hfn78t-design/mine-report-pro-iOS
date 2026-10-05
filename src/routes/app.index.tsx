@@ -8,14 +8,14 @@ import { type EstadoEquipo } from "@/lib/ops-types";
 export const Route = createFileRoute("/app/")({
   head: () => ({
     meta: [
-      { title: "Panel de guardia | REPORT PRO" },
+      { title: "Panel de guardia | REPORT BATCH" },
       {
         name: "description",
         content: "Panel de guardia y estado de equipos.",
       },
       {
         property: "og:title",
-        content: "Panel de guardia | REPORT PRO",
+        content: "Panel de guardia | REPORT BATCH",
       },
       {
         property: "og:description",
@@ -55,7 +55,7 @@ function Panel() {
       {/* ENCABEZADO */}
       <div>
         <h1 className="text-2xl font-bold uppercase tracking-tight">
-          REPORT PRO
+          REPORT BATCH
         </h1>
 
         <p className="text-sm text-muted-foreground">
