@@ -96,7 +96,7 @@ export function construirPdf(rep: Reporte, data: OpsData) {
 );
 
   seccion(
-    "lanzamientos",
+    "LANZAMIENTOS DE ROBOTS",
     [
   "Hora",
   "Robot",
@@ -116,7 +116,7 @@ rep.lanzamientos.map((l) => [
   );
 
   seccion(
-    "carguios",
+    "CARGUÍO DE MIXERS",
     [
   "Hora",
   "Mixer",
@@ -136,7 +136,7 @@ rep.carguios.map((c) => [
   );
 
   seccion(
-    "fallas",
+    "FALLAS REPORTADAS",
     ["Hora", "Equipo", "Tipo", "Descripción", "Acción tomada", "Estado final"],
     rep.fallas.map((f) => [
   f.hora,
@@ -149,7 +149,7 @@ rep.carguios.map((c) => [
   );
 
   seccion(
-    "desechos",
+    "DESECHOS / MORTEROS",
     ["Hora", "Tipo", "Equipo", "Cantidad", "Descripción"],
     rep.desechos.map((d) => [
   d.hora,
