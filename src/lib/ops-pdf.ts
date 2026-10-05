@@ -156,10 +156,34 @@ rep.carguios.map((c) => [
 ]),
   );
 
-  titulo("OBSERVACIONES GENERALES");
+    titulo("OBSERVACIONES GENERALES");
+
   doc.setFontSize(9);
   doc.setTextColor(60, 60, 60);
-  const texto = doc.splitTextToSize(rep.observaciones || "Sin observaciones registradas.", ancho - 80);
+
+  const texto = doc.splitTextToSize(
+    rep.observaciones || "Sin observaciones registradas.",
+    ancho - 80,
+  );
+
+  const altoLinea = 12;
+  const altoNecesario = texto.length * altoLinea;
+
+  const altoPagina = doc.internal.pageSize.getHeight();
+
+  if (y + 6 + altoNecesario > altoPagina - 40) {
+    doc.addPage();
+    y = 60;
+
+    doc.setFontSize(11);
+    doc.setTextColor(30, 30, 30);
+    doc.text("OBSERVACIONES GENERALES", 40, y);
+    y += 10;
+
+    doc.setFontSize(9);
+    doc.setTextColor(60, 60, 60);
+  }
+
   doc.text(texto, 40, y + 6);
 
   return doc;
