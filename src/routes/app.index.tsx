@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Boxes, FilePlus2, History } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, FilePlus2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { nombreSupervisor, useOpsData } from "@/lib/ops-store";
 import { type EstadoEquipo } from "@/lib/ops-types";
@@ -7,10 +8,19 @@ import { type EstadoEquipo } from "@/lib/ops-types";
 export const Route = createFileRoute("/app/")({
   head: () => ({
     meta: [
-      { title: "Panel de guardia | Guardia Ops" },
-      { name: "description", content: "Resumen de la guardia: equipos, borradores en curso y reportes recientes." },
-      { property: "og:title", content: "Panel de guardia | Guardia Ops" },
-      { property: "og:description", content: "Resumen de equipos y reportes de guardia en un solo lugar." },
+      { title: "Panel de guardia | REPORT PRO" },
+      {
+        name: "description",
+        content: "Panel de guardia y estado de equipos.",
+      },
+      {
+        property: "og:title",
+        content: "Panel de guardia | REPORT PRO",
+      },
+      {
+        property: "og:description",
+        content: "Panel de guardia y estado de equipos.",
+      },
     ],
   }),
   component: Panel,
@@ -19,151 +29,252 @@ export const Route = createFileRoute("/app/")({
 function Panel() {
   const data = useOpsData();
   const borrador = data.reportes.find((r) => r.estado === "borrador");
-  const ultimos = data.reportes.slice(0, 5);
 
+  const [detalle, setDetalle] = useState<
+    "robots" | "mixers" | null
+  >(null);
 
-const conteoRobots = (estado: EstadoEquipo) =>
-  borrador
-    ? Object.values(borrador.robots).filter((r) => r.estado === estado).length
-    : 0;
+  const conteo = (
+    tipo: "robots" | "mixers",
+    estado: EstadoEquipo,
+  ) => {
+    if (!borrador) return 0;
 
-const conteoMixers = (estado: EstadoEquipo) =>
-  borrador
-    ? Object.values(borrador.mixers).filter((m) => m.estado === estado).length
-    : 0;
+    return Object.values(borrador[tipo]).filter(
+      (equipo) => equipo.estado === estado,
+    ).length;
+  };
+
+  const equiposDetalle =
+    detalle && borrador
+      ? Object.values(borrador[detalle])
+      : [];
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 px-4 py-6">
+      {/* ENCABEZADO */}
       <div>
-        <h1 className="text-2xl font-bold uppercase tracking-tight">Panel de guardia</h1>
+        <h1 className="text-2xl font-bold uppercase tracking-tight">
+          REPORT PRO
+        </h1>
+
         <p className="text-sm text-muted-foreground">
-          {data.robots.length} robots · {data.mixers.length} mixers · Datos guardados en el dispositivo
+          Panel de guardia
         </p>
       </div>
 
-      {borrador ? (
-  <div className="rounded-xl border border-primary/30 bg-card p-4 shadow-sm">
-    <div className="flex items-center gap-2">
-      <span className="text-lg">📝</span>
-      <p className="text-sm font-bold uppercase tracking-wide">
-        Reporte en curso
-      </p>
-    </div>
+      {/* GUARDIA ACTUAL */}
+      <section className="space-y-3">
+        <h2 className="text-sm font-bold uppercase tracking-wide">
+          Guardia actual
+        </h2>
 
-    <div className="mt-3 space-y-1">
-      <p className="text-base font-semibold">
-        {borrador.correlativo} · Guardia{" "}
-        {borrador.tipoGuardia === "dia" ? "Día" : "Noche"}
-      </p>
+        {borrador ? (
+          <div className="rounded-xl border border-primary/30 bg-card p-4 shadow-sm">
+            <p className="text-sm font-bold uppercase tracking-wide">
+              Reporte en curso
+            </p>
 
-      <p className="text-sm text-muted-foreground">
-        Supervisor: {nombreSupervisor(data, borrador.supervisorId)}
-      </p>
-    </div>
+            <div className="mt-3 space-y-1">
+              <p className="text-base font-semibold">
+                Guardia{" "}
+                {borrador.tipoGuardia === "dia"
+                  ? "Día"
+                  : "Noche"}
+              </p>
 
-    <Button asChild size="lg" className="mt-4 w-full">
-      <Link to="/app/reporte/nuevo" search={{ continuar: "1" }}>
-        Continuar reporte
-        <ArrowRight className="ml-1 size-4" />
-      </Link>
-    </Button>
-  </div>
-) : null}
+              <p className="text-sm text-muted-foreground">
+                Supervisor:{" "}
+                {nombreSupervisor(
+                  data,
+                  borrador.supervisorId,
+                )}
+              </p>
+            </div>
 
-<Button asChild variant="outline" size="lg" className="w-full">
-  <Link to="/app/reporte/nuevo">
-    <FilePlus2 className="mr-1 size-4" />
-    Iniciar nuevo reporte
-  </Link>
-</Button>
+            <Button
+              asChild
+              size="lg"
+              className="mt-4 w-full"
+            >
+              <Link
+                to="/app/reporte/nuevo"
+                search={{ continuar: "1" }}
+              >
+                Continuar reporte
+                <ArrowRight className="ml-1 size-4" />
+              </Link>
+            </Button>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+            <p className="text-sm text-muted-foreground">
+              No hay un reporte activo en esta guardia.
+            </p>
+          </div>
+        )}
 
-<section className="space-y-3">
-  <div>
-    <h2 className="text-sm font-bold uppercase tracking-wide">
-      Equipos de la guardia
-    </h2>
-    <p className="text-xs text-muted-foreground">
-      Estado actual del reporte en curso
-    </p>
-  </div>
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="w-full"
+        >
+          <Link to="/app/reporte/nuevo">
+            <FilePlus2 className="mr-1 size-4" />
+            Iniciar reporte
+          </Link>
+        </Button>
+      </section>
 
-  <div className="grid grid-cols-2 gap-3">
-    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <div className="flex items-center gap-2">
-  <p className="text-sm font-bold">ROBOTS</p>
-</div>
+      {/* EQUIPOS DE LA GUARDIA */}
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wide">
+            Equipos de la guardia
+          </h2>
 
-      <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-semibold">
-        <span>🟢 {conteoRobots("operativo")} OPER</span>
-        <span>🔵 {conteoRobots("standby")} STBY</span>
-        <span>🟡 {conteoRobots("mantenimiento")} MANT</span>
-        <span>🔴 {conteoRobots("inoperativo")} INOP</span>
-      </div>
-
-      <Link
-        to="/app/catalogos"
-        className="mt-3 inline-flex text-xs font-semibold text-primary"
-      >
-        Ver equipos →
-      </Link>
-    </div>
-
-    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <div className="flex items-center gap-2">
-  <p className="text-sm font-bold">MIXERS</p>
-</div>
-
-      <div className="mt-3 grid grid-cols-2 gap-2 text-sm font-semibold">
-        <span>🟢 {conteoMixers("operativo")} OPER</span>
-        <span>🔵 {conteoMixers("standby")} STBY</span>
-        <span>🟡 {conteoMixers("mantenimiento")} MANT</span>
-        <span>🔴 {conteoMixers("inoperativo")} INOP</span>
-      </div>
-
-      <Link
-        to="/app/catalogos"
-        className="mt-3 inline-flex text-xs font-semibold text-primary"
-      >
-        Ver equipos →
-      </Link>
-    </div>
-  </div>
-</section>
-
-      <div className="rounded-lg border border-border bg-card">
-        <div className="flex items-center justify-between border-b border-border px-4 py-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wide">Reportes recientes</h2>
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/app/historial">
-              <History className="mr-1 size-4" /> Ver historial
-            </Link>
-          </Button>
+          <p className="text-xs text-muted-foreground">
+            Estado actual
+          </p>
         </div>
-        <ul className="divide-y divide-border">
-          {ultimos.length === 0 && <li className="px-4 py-6 text-sm text-muted-foreground">Aún no hay reportes.</li>}
-          {ultimos.map((r) => (
-            <li key={r.id} className="flex items-center justify-between gap-3 px-4 py-3">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium">{r.correlativo}</p>
-                <p className="truncate text-xs text-muted-foreground">
-                  {r.fecha} · {r.tipoGuardia === "dia" ? "Día" : "Noche"} · {nombreSupervisor(data, r.supervisorId)}
-                </p>
-              </div>
-              <Button asChild variant="outline" size="sm">
-                <Link to="/app/reporte/$id" params={{ id: r.id }}>
-                  Abrir
-                </Link>
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </div>
 
-      <Button asChild variant="outline">
-        <Link to="/app/catalogos">
-          <Boxes className="mr-1 size-4" /> Administrar catálogos
-        </Link>
-      </Button>
+        <div className="grid grid-cols-2 gap-3">
+          {/* ROBOTS */}
+          <div className="flex min-h-[220px] flex-col rounded-xl border border-border bg-card p-4 shadow-sm">
+            <p className="text-sm font-bold">
+              ROBOTS
+            </p>
+
+            <div className="mt-3 space-y-2 text-xs font-semibold sm:text-sm">
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-green-500" />
+                {conteo("robots", "operativo")} Operativos
+              </p>
+
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-blue-500" />
+                {conteo("robots", "standby")} Standby
+              </p>
+
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-yellow-500" />
+                {conteo("robots", "mantenimiento")} Mant.
+              </p>
+
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-red-500" />
+                {conteo("robots", "inoperativo")} Inoperat.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() =>
+                setDetalle(
+                  detalle === "robots"
+                    ? null
+                    : "robots",
+                )
+              }
+              className="mt-auto pt-4 text-left text-xs font-semibold text-primary"
+            >
+              {detalle === "robots"
+                ? "Ocultar detalle"
+                : "Ver detalle"}
+            </button>
+          </div>
+
+          {/* MIXERS */}
+          <div className="flex min-h-[220px] flex-col rounded-xl border border-border bg-card p-4 shadow-sm">
+            <p className="text-sm font-bold">
+              MIXERS
+            </p>
+
+            <div className="mt-3 space-y-2 text-xs font-semibold sm:text-sm">
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-green-500" />
+                {conteo("mixers", "operativo")} Operativos
+              </p>
+
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-blue-500" />
+                {conteo("mixers", "standby")} Standby
+              </p>
+
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-yellow-500" />
+                {conteo("mixers", "mantenimiento")} Mant.
+              </p>
+
+              <p>
+                <span className="mr-1 inline-block size-2 rounded-full bg-red-500" />
+                {conteo("mixers", "inoperativo")} Inoperat.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() =>
+                setDetalle(
+                  detalle === "mixers"
+                    ? null
+                    : "mixers",
+                )
+              }
+              className="mt-auto pt-4 text-left text-xs font-semibold text-primary"
+            >
+              {detalle === "mixers"
+                ? "Ocultar detalle"
+                : "Ver detalle"}
+            </button>
+          </div>
+        </div>
+
+        {/* DETALLE DE EQUIPOS */}
+        {detalle && borrador && (
+          <div className="rounded-xl border border-border bg-card shadow-sm">
+            <div className="border-b border-border px-4 py-3">
+              <p className="text-sm font-bold uppercase">
+                {detalle === "robots"
+                  ? "Robots"
+                  : "Mixers"}{" "}
+                de la guardia
+              </p>
+            </div>
+
+            <div className="divide-y divide-border">
+              {equiposDetalle.map((equipo) => (
+                <div
+                  key={equipo.id}
+                  className="flex items-center justify-between gap-3 px-4 py-3"
+                >
+                  <span className="text-sm font-medium">
+                    {equipo.codigo}
+                  </span>
+
+                  <span className="text-xs font-semibold text-muted-foreground">
+                    {equipo.estado === "operativo"
+                      ? "Operativo"
+                      : equipo.estado === "standby"
+                        ? "Standby"
+                        : equipo.estado === "mantenimiento"
+                          ? "Mantenimiento"
+                          : "Inoperativo"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!borrador && (
+          <div className="rounded-lg border border-dashed border-border px-4 py-3 text-xs text-muted-foreground">
+            Inicia un reporte para cargar los equipos de
+            la guardia y consultar sus estados.
+          </div>
+        )}
+      </section>
     </div>
   );
 }
