@@ -155,7 +155,7 @@ const compartirPdf = async () => {
       <Seccion titulo="Estado de mixers">
         {Object.entries(rep.mixers).map(([mid, det]) => (
           <div key={mid} className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
-            <span>{nombreEquipo(data, mid)}</span>
+            <span>{nombreEquipoSnapshot(mid)}</span>
             <span className={`rounded px-2 py-0.5 text-[10px] font-semibold ${ESTADO_CLASSES[det.estado]}`}>
               {ESTADO_LABEL[det.estado]}
             </span>
