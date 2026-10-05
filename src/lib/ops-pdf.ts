@@ -35,43 +35,54 @@ export function construirPdf(rep: Reporte, data: OpsData) {
   );
 
   let y = 115;
-    const seccion = (tituloSeccion: string, head: string[], body: (string | number)[][]) => {
-    if (body.length === 0) {
-      body = [["Sin registros", ...head.slice(1).map(() => "-")]];
-    }
+    const seccion = (
+  tituloSeccion: string,
+  head: string[],
+  body: (string | number)[][],
+) => {
+  if (body.length === 0) {
+    body = [["Sin registros", ...head.slice(1).map(() => "-")]];
+  }
 
-    const altoPagina = doc.internal.pageSize.getHeight();
+  const altoPagina = doc.internal.pageSize.getHeight();
 
-    if (y > altoPagina - 140) {
-      doc.addPage();
-      y = 60;
-    }
+  if (y > altoPagina - 120) {
+    doc.addPage();
+    y = 60;
+  }
 
-    doc.setFontSize(11);
-    doc.setTextColor(30, 30, 30);
-    doc.text(tituloSeccion, 40, y);
-    y += 10;
+  doc.setFontSize(11);
+  doc.setTextColor(30, 30, 30);
+  doc.text(tituloSeccion, 40, y);
+  y += 10;
 
-    autoTable(doc, {
-      startY: y,
-      head: [head],
-      body,
-      margin: { left: 40, right: 40 },
-      styles: { fontSize: 8, cellPadding: 4 },
-      headStyles: { fillColor: [45, 52, 66], textColor: [245, 180, 60] },
-      theme: "grid",
-      tableLineColor: [220, 220, 220],
-    });
+  autoTable(doc, {
+    startY: y,
+    head: [head],
+    body,
+    margin: { left: 40, right: 40 },
+    styles: {
+      fontSize: 8,
+      cellPadding: 4,
+    },
+    headStyles: {
+      fillColor: [45, 52, 66],
+      textColor: [245, 180, 60],
+    },
+    theme: "grid",
+    tableLineColor: [220, 220, 220],
+    pageBreak: "auto",
+    showHead: "everyPage",
+  });
 
-    // @ts-expect-error lastAutoTable es añadido por el plugin
-    y = (doc.lastAutoTable?.finalY ?? y) + 26;
+  // @ts-expect-error lastAutoTable es añadido por el plugin
+  y = (doc.lastAutoTable?.finalY ?? y) + 26;
 
-    if (y > altoPagina - 120) {
-      doc.addPage();
-      y = 60;
-    }
-  };
-
+  if (y > altoPagina - 80) {
+    doc.addPage();
+    y = 60;
+  }
+};
 
   seccion(
     "ESTADO DE ROBOTS LANZADORES",
