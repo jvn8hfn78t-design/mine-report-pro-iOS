@@ -114,20 +114,6 @@ function Panel() {
           </div>
         )}
 
-        <Button
-          asChild
-          variant="outline"
-          size="lg"
-          className="w-full"
-        >
-          <Link
-  to="/app/reporte/nuevo"
-  search={{ continuar: true }}
->
-  Continuar reporte
-  <ArrowRight className="ml-1 size-4" />
-</Link>
-        </Button>
       </section>
 
       {/* EQUIPOS DE LA GUARDIA */}
