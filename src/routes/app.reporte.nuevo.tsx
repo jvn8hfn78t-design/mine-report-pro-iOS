@@ -435,10 +435,14 @@ case 2:
     Índice del reporte
   </Button>
 
-  <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
-    <Save className="size-3" />
-    Guardado automático
-  </span>
+  <span
+  className={`flex items-center gap-1 text-[11px] ${
+    guardadoLocal ? "text-muted-foreground" : "text-destructive"
+  }`}
+>
+  <Save className="size-3" />
+  {guardadoLocal ? "Guardado automático" : "No se pudo guardar"}
+</span>
 </div>
       </div>
 
