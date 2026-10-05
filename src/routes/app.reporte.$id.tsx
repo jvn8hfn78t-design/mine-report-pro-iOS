@@ -167,7 +167,7 @@ const compartirPdf = async () => {
         {rep.lanzamientos.length === 0 && <p className="text-muted-foreground">Sin registros.</p>}
         {rep.lanzamientos.map((l) => (
           <p key={l.id} className="border-b border-border/60 pb-2">
-            <span className="font-mono text-xs text-primary">{l.hora}</span> · {nombreEquipo(data, l.robotId)} ·{" "}
+            <span className="font-mono text-xs text-primary">{l.hora}</span> · {nombreEquipoSnapshot(l.robotId)} ·{" "}
             {l.labor} · {l.cantidad} m³{" "}
 {l.notas && <span className="text-muted-foreground">({l.notas})</span>}
           </p>
