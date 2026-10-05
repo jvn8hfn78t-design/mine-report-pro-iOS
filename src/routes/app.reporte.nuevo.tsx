@@ -116,10 +116,20 @@ const [guardadoLocal, setGuardadoLocal] = useState(true);
     }
   }
 
+  try {
   const nuevo = iniciarNuevaGuardia();
 
   setRep(nuevo);
   setMostrarIndice(false);
+  setGuardadoLocal(true);
+} catch (error) {
+  console.error("No se pudo iniciar la nueva guardia.", error);
+  setGuardadoLocal(false);
+
+  toast.error(
+    "No se pudo guardar la nueva guardia en el dispositivo. Inténtelo nuevamente.",
+  );
+}
 }, [continuar]);
 
     // Autoguardado en el dispositivo
