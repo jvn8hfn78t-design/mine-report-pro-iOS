@@ -93,18 +93,15 @@ function Panel() {
             </div>
 
             <Button
-              asChild
-              size="lg"
-              className="mt-4 w-full"
-            >
-              <Link
-                to="/app/reporte/nuevo"
-                search={{ continuar: "1" }}
-              >
-                Continuar reporte
-                <ArrowRight className="ml-1 size-4" />
-              </Link>
-            </Button>
+  asChild
+  size="lg"
+  className="mt-4 w-full"
+>
+  <a href="/app/reporte/nuevo?continuar=1">
+    Continuar reporte
+    <ArrowRight className="ml-1 size-4" />
+  </a>
+</Button>
           </div>
                 ) : (
           <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
