@@ -24,12 +24,13 @@ function AppLayout() {
         <nav className="hidden gap-1 sm:flex">
           {nav.map((n) => (
             <Link
-              key={n.to}
-              to={n.to}
-              activeOptions={{ exact: "exact" in n ? n.exact : false }}
-              activeProps={{ className: "bg-primary/15 text-primary" }}
-              className="flex items-center gap-2 rounded px-3 py-2 text-sm text-muted-foreground hover:bg-accent"
-            >
+  key={n.to}
+  to={n.to}
+  search={"search" in n ? n.search : undefined}
+  activeOptions={{ exact: "exact" in n ? n.exact : false }}
+  activeProps={{ className: "bg-primary/15 text-primary" }}
+  className="flex items-center gap-2 rounded px-3 py-2 text-sm text-muted-foreground hover:bg-accent"
+>
               <n.icon className="size-4" />
               {n.label}
             </Link>
@@ -44,12 +45,13 @@ function AppLayout() {
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-border bg-card sm:hidden">
         {nav.map((n) => (
           <Link
-            key={n.to}
-            to={n.to}
-            activeOptions={{ exact: "exact" in n ? n.exact : false }}
-            activeProps={{ className: "text-primary" }}
-            className="flex flex-col items-center gap-1 py-2 text-[11px] text-muted-foreground"
-          >
+  key={n.to}
+  to={n.to}
+  search={"search" in n ? n.search : undefined}
+  activeOptions={{ exact: "exact" in n ? n.exact : false }}
+  activeProps={{ className: "text-primary" }}
+  className="flex flex-col items-center gap-1 py-2 text-[11px] text-muted-foreground"
+>
             <n.icon className="size-5" />
             {n.label}
           </Link>
