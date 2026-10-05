@@ -106,15 +106,13 @@ function Panel() {
               </Link>
             </Button>
           </div>
-        ) : (
+                ) : (
           <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
             <p className="text-sm text-muted-foreground">
               No hay un reporte activo en esta guardia.
             </p>
           </div>
         )}
-
-      </section>
 
         <Button
           asChild
@@ -130,6 +128,7 @@ function Panel() {
             Iniciar reporte
           </Link>
         </Button>
+      </section>
 
       {/* EQUIPOS DE LA GUARDIA */}
       <section className="space-y-3">
