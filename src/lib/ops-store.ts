@@ -275,13 +275,18 @@ export function iniciarNuevaGuardia(): Reporte {
 
   const nuevo = nuevoReporte(dataLimpia);
 
-  setData((d) => ({
-    ...d,
-    reportes: [nuevo],
-  }));
+  const guardado = setData((d) => ({
+  ...d,
+  reportes: [nuevo],
+}));
 
-  return nuevo;
+if (!guardado) {
+  throw new Error(
+    "No se pudo guardar la nueva guardia localmente.",
+  );
 }
+
+return nuevo;
 
 export function nombreEquipo(data: OpsData, id: string) {
   const eq = [...data.robots, ...data.mixers].find((e) => e.id === id);
