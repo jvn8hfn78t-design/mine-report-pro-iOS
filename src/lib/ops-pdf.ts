@@ -78,10 +78,6 @@ export function construirPdf(rep: Reporte, data: OpsData) {
   // @ts-expect-error lastAutoTable es añadido por el plugin
   y = (doc.lastAutoTable?.finalY ?? y) + 26;
 
-  if (y > altoPagina - 80) {
-    doc.addPage();
-    y = 60;
-  }
 };
 
   seccion(
