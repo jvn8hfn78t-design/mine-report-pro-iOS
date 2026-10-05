@@ -1,0 +1,85 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      - name: Instalar Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Instalar dependencias
+        run: bun install
+
+      - name: Compilar aplicación web
+        env:
+          CAPACITOR_BUILD: "true"
+        run: bun run build
+
+      - name: Diagnosticar salida del build
+        run: |
+          echo "========================================"
+          echo "RAÍZ DEL PROYECTO"
+          echo "========================================"
+          ls -la
+
+          echo ""
+          echo "========================================"
+          echo "CARPETA DIST"
+          echo "========================================"
+          find dist -maxdepth 5 -type f 2>/dev/null || true
+
+          echo ""
+          echo "========================================"
+          echo "CARPETA OUTPUT"
+          echo "========================================"
+          find .output -maxdepth 7 -type f 2>/dev/null || true
+
+          echo ""
+          echo "========================================"
+          echo "TODOS LOS INDEX.HTML"
+          echo "========================================"
+          find . -type f -name "index.html" \
+            -not -path "./node_modules/*" \
+            -not -path "./android/*" \
+            -not -path "./.git/*" \
+            -print
+
+      - name: Instalar Capacitor CLI
+        run: bunx cap --version
+
+      - name: Crear proyecto Android
+        run: bunx cap add android
+
+      - name: Sincronizar Capacitor
+        run: bunx cap sync android
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Compilar APK Debug
+        working-directory: android
+        run: ./gradlew assembleDebug
+
+      - name: Guardar APK Debug
+        uses: actions/upload-artifact@v4
+        with:
+          name: mine-report-batch-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
