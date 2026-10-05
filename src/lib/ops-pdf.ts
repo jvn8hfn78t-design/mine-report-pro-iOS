@@ -121,7 +121,7 @@ rep.lanzamientos.map((l) => [
 ],
 rep.carguios.map((c) => [
   c.hora,
-  nombreEquipo(data, c.mixerId),
+  nombreEquipoSnapshot(c.mixerId),
   c.labor,
   c.cantidad,
   "m³",
