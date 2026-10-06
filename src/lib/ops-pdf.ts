@@ -203,7 +203,21 @@ y += 10;
   return doc;
 }
 
-export function descargarPdf(rep: Reporte, data: OpsData) {
+export async function descargarPdf(rep: Reporte, data: OpsData) {
   const doc = construirPdf(rep, data);
-  doc.save(`${rep.correlativo}.pdf`);
+
+  const dataUri = doc.output("datauristring");
+  const base64 = dataUri.split(",")[1];
+
+  if (!base64) {
+    throw new Error("No se pudo generar el contenido del PDF.");
+  }
+
+  const fileName = `${rep.correlativo}.pdf`;
+
+  await Filesystem.writeFile({
+    path: fileName,
+    data: base64,
+    directory: Directory.Documents,
+  });
 }
