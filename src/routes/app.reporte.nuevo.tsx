@@ -693,7 +693,6 @@ case 2:
                       />
                     </div>
                     <div className="space-y-1">
-  <div className="space-y-1">
   <Label className="text-xs">Nivel</Label>
   <Input
     value={l.nivel}
