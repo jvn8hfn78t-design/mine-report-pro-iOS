@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Capacitor } from "@capacitor/core";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import type { OpsData } from "./ops-store";
 import { nombreEquipo, nombreSupervisor } from "./ops-store";
@@ -209,7 +210,7 @@ export async function descargarPdf(rep: Reporte, data: OpsData) {
   const fileName = `${rep.correlativo}.pdf`;
 
   // Navegador / Vercel
-  if (!("Capacitor" in window)) {
+  if (!Capacitor.isNativePlatform()) {
     doc.save(fileName);
     return;
   }
