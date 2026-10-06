@@ -116,9 +116,19 @@ const compartirPdf = async () => {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-  <Button onClick={() => descargarPdf(rep, getData())}>
-    <Download className="mr-1 size-4" /> Descargar PDF
-  </Button>
+  <Button
+  onClick={async () => {
+    try {
+      await descargarPdf(rep, getData());
+      toast.success("PDF guardado correctamente.");
+    } catch (error) {
+      console.error(error);
+      toast.error("No se pudo guardar el PDF.");
+    }
+  }}
+>
+  <Download className="mr-1 size-4" /> Descargar PDF
+</Button>
 
   <Button variant="outline" onClick={compartirPdf}>
     <Upload className="mr-1 size-4" /> Compartir PDF
