@@ -127,10 +127,11 @@ rep.lanzamientos.map((l) => [
 );
 
   seccion(
-    "CARGUÍO DE MIXERS",
-    [
+  "CARGUÍO DE MIXERS",
+  [
   "Hora",
   "Mixer",
+  "Nivel",
   "Labor",
   "Cantidad",
   "Unidad",
@@ -139,12 +140,13 @@ rep.lanzamientos.map((l) => [
 rep.carguios.map((c) => [
   c.hora,
   nombreEquipoSnapshot(c.mixerId),
+  c.nivel,
   c.labor,
   c.cantidad,
   "m³",
   c.notas || "-",
 ]),
-  );
+);
 
   seccion(
     "FALLAS REPORTADAS",
