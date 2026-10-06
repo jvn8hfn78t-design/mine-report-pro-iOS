@@ -151,7 +151,12 @@ const compartirPdf = async () => {
   onClick={async () => {
     try {
       await descargarPdf(rep, getData());
-      toast.success("PDF guardado correctamente.");
+
+      toast.success(
+        Capacitor.isNativePlatform()
+          ? "PDF guardado en Documentos."
+          : "PDF descargado correctamente.",
+      );
     } catch (error) {
       console.error("ERROR AL GENERAR/GUARDAR PDF:", error);
 
