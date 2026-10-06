@@ -51,6 +51,7 @@ export interface Lanzamiento {
   id: string;
   robotId: string;
   hora: string;
+  nivel: string;
   labor: string;
   cantidad: number;
   notas: string;
@@ -60,11 +61,11 @@ export interface Carguio {
   id: string;
   mixerId: string;
   hora: string;
+  nivel: string;
   labor: string;
   cantidad: number;
   notas: string;
 }
-
 export interface Falla {
   id: string;
   equipoId: string;
