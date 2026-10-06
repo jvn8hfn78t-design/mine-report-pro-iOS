@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Directory, Filesystem } from "@capacitor/filesystem";
 import type { OpsData } from "./ops-store";
 import { nombreEquipo, nombreSupervisor } from "./ops-store";
 import { ESTADO_LABEL, type Reporte } from "./ops-types";
