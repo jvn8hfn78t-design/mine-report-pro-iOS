@@ -1194,7 +1194,7 @@ case 2:
   rep.lanzamientos
     .map(
       (l) =>
-        `${l.hora} ${rep.robotsSnapshot[l.robotId]?.codigo ?? l.robotId}: ${l.labor} · ${l.cantidad} m³`,
+        `${l.hora} ${rep.robotsSnapshot[l.robotId]?.codigo ?? l.robotId}: ${l.nivel} · ${l.labor} · ${l.cantidad} m³`,
     )
     .join(" · ") || "Sin registros",
               },
