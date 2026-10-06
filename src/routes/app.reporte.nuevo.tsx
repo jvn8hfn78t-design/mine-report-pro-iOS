@@ -862,6 +862,21 @@ case 2:
 </div>
 
 <div className="space-y-1">
+  <Label className="text-xs">Nivel</Label>
+  <Input
+    value={c.nivel}
+    placeholder="Ej. Nv. 4500"
+    onChange={(e) =>
+      up({
+        carguios: rep.carguios.map((x) =>
+          x.id === c.id ? { ...x, nivel: e.target.value } : x,
+        ),
+      })
+    }
+  />
+</div>
+
+<div className="space-y-1">
   <Label className="text-xs">Labor</Label>
   <Input
     value={c.labor}
