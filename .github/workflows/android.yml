@@ -74,12 +74,83 @@ jobs:
       - name: Configurar Android SDK
         uses: android-actions/setup-android@v4
 
-      - name: Compilar APK Debug
-        working-directory: android
-        run: ./gradlew assembleDebug
+      - name: Recuperar keystore de firma
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > android/shotcrete-release.keystore
 
-      - name: Guardar APK Debug
+          echo "Keystore recuperada:"
+          ls -lh android/shotcrete-release.keystore
+
+      - name: Compilar APK Release
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: Verificar keystore
+        working-directory: android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          echo "========================================"
+          echo "VERIFICANDO KEYSTORE"
+          echo "========================================"
+
+          keytool -list \
+            -keystore shotcrete-release.keystore \
+            -storepass "$KEYSTORE_PASSWORD"
+
+          echo ""
+          echo "Keystore válida."
+
+      - name: Firmar APK Release
+        working-directory: android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          UNSIGNED_APK=$(find app/build/outputs/apk/release -type f -name "*unsigned.apk" | head -n 1)
+
+          if [ -z "$UNSIGNED_APK" ]; then
+            echo "ERROR: No se encontró el APK Release sin firmar."
+            find app/build/outputs -type f
+            exit 1
+          fi
+
+          echo "APK encontrado:"
+          echo "$UNSIGNED_APK"
+
+          BUILD_TOOLS=$(find "$ANDROID_HOME/build-tools" \
+            -maxdepth 1 \
+            -mindepth 1 \
+            -type d | sort -V | tail -n 1)
+
+          echo "Build Tools:"
+          echo "$BUILD_TOOLS"
+
+          "$BUILD_TOOLS/zipalign" \
+            -f 4 \
+            "$UNSIGNED_APK" \
+            app-release-aligned.apk
+
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks shotcrete-release.keystore \
+            --ks-key-alias shotcrete \
+            --ks-pass env:KEYSTORE_PASSWORD \
+            --key-pass env:KEYSTORE_PASSWORD \
+            --out app-release.apk \
+            app-release-aligned.apk
+
+          "$BUILD_TOOLS/apksigner" verify --verbose app-release.apk
+
+          echo ""
+          echo "========================================"
+          echo "APK RELEASE FIRMADO CORRECTAMENTE"
+          echo "========================================"
+
+          ls -lh app-release.apk
+
+      - name: Guardar APK Release
         uses: actions/upload-artifact@v4
         with:
-          name: mine-report-batch-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: mine-report-batch-release
+          path: android/app-release.apk
