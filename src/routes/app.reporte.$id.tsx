@@ -65,36 +65,28 @@ const compartirPdf = async () => {
   try {
     const doc = construirPdf(rep, getData());
 
-    const pdfBlob = doc.output("blob");
+    const dataUri = doc.output("datauristring");
+    const base64 = dataUri.split(",")[1];
 
-    const pdfFile = new File(
-      [pdfBlob],
-      `${rep.correlativo}.pdf`,
-      { type: "application/pdf" },
-    );
+    if (!base64) {
+      throw new Error("No se pudo generar el contenido del PDF.");
+    }
 
-    const shareData = {
+    const fileName = `${rep.correlativo}.pdf`;
+
+    const savedFile = await Filesystem.writeFile({
+      path: fileName,
+      data: base64,
+      directory: Directory.Cache,
+    });
+
+    await Share.share({
       title: rep.correlativo,
       text: resumenTexto,
-      files: [pdfFile],
-    };
-
-    if (!navigator.share || !navigator.canShare) {
-      toast.error("Este dispositivo no permite compartir archivos PDF.");
-      return;
-    }
-
-    if (!navigator.canShare({ files: [pdfFile] })) {
-      toast.error("No se puede adjuntar el PDF desde este dispositivo.");
-      return;
-    }
-
-    await navigator.share(shareData);
+      url: savedFile.uri,
+      dialogTitle: "Compartir PDF",
+    });
   } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      return;
-    }
-
     console.error(error);
     toast.error("No se pudo compartir el reporte.");
   }
