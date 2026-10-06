@@ -64,15 +64,40 @@ Supervisor: ${nombreSupervisor(data, rep.supervisorId)}`;
 const compartirPdf = async () => {
   try {
     const doc = construirPdf(rep, getData());
+    const fileName = `${rep.correlativo}.pdf`;
 
+    // Navegador / Vercel
+    if (!("Capacitor" in window)) {
+      const blob = doc.output("blob");
+      const file = new File([blob], fileName, {
+        type: "application/pdf",
+      });
+
+      if (
+        typeof navigator.share === "function" &&
+        typeof navigator.canShare === "function" &&
+        navigator.canShare({ files: [file] })
+      ) {
+        await navigator.share({
+          title: rep.correlativo,
+          text: resumenTexto,
+          files: [file],
+        });
+        return;
+      }
+
+      doc.save(fileName);
+      toast.success("PDF descargado correctamente.");
+      return;
+    }
+
+    // Android / Capacitor
     const dataUri = doc.output("datauristring");
     const base64 = dataUri.split(",")[1];
 
     if (!base64) {
       throw new Error("No se pudo generar el contenido del PDF.");
     }
-
-    const fileName = `${rep.correlativo}.pdf`;
 
     const savedFile = await Filesystem.writeFile({
       path: fileName,
@@ -87,8 +112,13 @@ const compartirPdf = async () => {
       dialogTitle: "Compartir PDF",
     });
   } catch (error) {
-    console.error(error);
-    toast.error("No se pudo compartir el reporte.");
+    console.error("ERROR AL COMPARTIR PDF:", error);
+
+    toast.error(
+      error instanceof Error
+        ? `Error PDF: ${error.message}`
+        : "No se pudo compartir el reporte.",
+    );
   }
 };
 
