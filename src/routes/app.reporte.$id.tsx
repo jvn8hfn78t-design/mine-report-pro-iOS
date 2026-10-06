@@ -65,7 +65,7 @@ Supervisor: ${nombreSupervisor(data, rep.supervisorId)}`;
 const compartirPdf = async () => {
   try {
     const doc = construirPdf(rep, getData());
-    const fileName = `${rep.correlativo}.pdf`;
+    const fileName = `Reporte_${nombreSupervisor(data, rep.supervisorId).replace(/\s+/g, "-")}_${rep.fecha.replace(/\//g, "-")}_${rep.tipoGuardia === "dia" ? "Dia" : "Noche"}.pdf`;
 
     // Navegador / Vercel
     if (!Capacitor.isNativePlatform()) {
