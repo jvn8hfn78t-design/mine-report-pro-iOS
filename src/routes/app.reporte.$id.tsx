@@ -122,8 +122,13 @@ const compartirPdf = async () => {
       await descargarPdf(rep, getData());
       toast.success("PDF guardado correctamente.");
     } catch (error) {
-      console.error(error);
-      toast.error("No se pudo guardar el PDF.");
+      console.error("ERROR AL GENERAR/GUARDAR PDF:", error);
+
+      toast.error(
+        error instanceof Error
+          ? `Error PDF: ${error.message}`
+          : "Error desconocido al guardar el PDF.",
+      );
     }
   }}
 >
