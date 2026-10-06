@@ -66,10 +66,27 @@ function Historial() {
               </div>
               <div className="flex gap-2">
                 {r.estado === "finalizado" && (
-                  <Button variant="outline" size="sm" onClick={() => descargarPdf(r, getData())}>
-                    <Download className="mr-1 size-4" /> PDF
-                  </Button>
-                )}
+  <Button
+    variant="outline"
+    size="sm"
+    onClick={async () => {
+      try {
+        await descargarPdf(r, getData());
+        toast.success("PDF guardado correctamente.");
+      } catch (error) {
+        console.error("ERROR AL DESCARGAR PDF:", error);
+
+        toast.error(
+          error instanceof Error
+            ? `Error PDF: ${error.message}`
+            : "No se pudo descargar el PDF.",
+        );
+      }
+    }}
+  >
+    <Download className="mr-1 size-4" /> PDF
+  </Button>
+)}
                 <Button asChild size="sm">
                   <Link to="/app/reporte/$id" params={{ id: r.id }}>
                     Ver
