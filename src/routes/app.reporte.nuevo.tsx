@@ -932,6 +932,7 @@ case 2:
   id: uid("cg"),
   mixerId: mixersOperativos[0]?.id ?? "",
   hora: new Date().toTimeString().slice(0, 5),
+  nivel: "",
   labor: "",
   cantidad: 0,
   notas: "",
