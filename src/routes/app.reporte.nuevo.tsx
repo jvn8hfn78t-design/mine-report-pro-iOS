@@ -779,6 +779,7 @@ case 2:
   id: uid("lz"),
   robotId: robotsOperativos[0]?.id ?? "",
   hora: new Date().toTimeString().slice(0, 5),
+  nivel: "",
   labor: "",
   cantidad: 0,
   notas: "",
