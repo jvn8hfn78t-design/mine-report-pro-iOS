@@ -107,11 +107,11 @@ const compartirPdf = async () => {
     });
 
     await Share.share({
-      title: rep.correlativo,
-      text: resumenTexto,
-      url: savedFile.uri,
-      dialogTitle: "Compartir PDF",
-    });
+  title: rep.correlativo,
+  text: `${resumenTexto}\n\n`,
+  url: savedFile.uri,
+  dialogTitle: "Compartir PDF",
+});
   } catch (error) {
     console.error("ERROR AL COMPARTIR PDF:", error);
 
