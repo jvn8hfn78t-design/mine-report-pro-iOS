@@ -68,7 +68,7 @@ const compartirPdf = async () => {
     const fileName = `${rep.correlativo}.pdf`;
 
     // Navegador / Vercel
-    if (!("Capacitor" in window)) {
+    if (!Capacitor.isNativePlatform()) {
       const blob = doc.output("blob");
       const file = new File([blob], fileName, {
         type: "application/pdf",
