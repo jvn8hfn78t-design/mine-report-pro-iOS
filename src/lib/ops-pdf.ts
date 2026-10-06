@@ -105,10 +105,11 @@ export function construirPdf(rep: Reporte, data: OpsData) {
 );
 
   seccion(
-    "LANZAMIENTOS DE ROBOTS",
-    [
+  "LANZAMIENTOS DE ROBOTS",
+  [
   "Hora",
   "Robot",
+  "Nivel",
   "Labor",
   "Cantidad",
   "Unidad",
@@ -117,12 +118,13 @@ export function construirPdf(rep: Reporte, data: OpsData) {
 rep.lanzamientos.map((l) => [
   l.hora,
   nombreEquipoSnapshot(l.robotId),
+  l.nivel,
   l.labor,
   l.cantidad,
   "m³",
   l.notas || "-",
 ]),
-  );
+);
 
   seccion(
     "CARGUÍO DE MIXERS",
