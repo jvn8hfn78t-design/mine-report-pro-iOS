@@ -207,7 +207,7 @@ y += 10;
 
 export async function descargarPdf(rep: Reporte, data: OpsData) {
   const doc = construirPdf(rep, data);
-  const fileName = `${rep.correlativo}.pdf`;
+  const fileName = `Reporte_${nombreSupervisor(data, rep.supervisorId).replace(/\s+/g, "-")}_${rep.fecha.replace(/\//g, "-")}_${rep.tipoGuardia === "dia" ? "Dia" : "Noche"}.pdf`;
 
   // Navegador / Vercel
   if (!Capacitor.isNativePlatform()) {
