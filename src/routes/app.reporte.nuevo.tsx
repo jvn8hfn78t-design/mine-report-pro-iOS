@@ -1205,7 +1205,7 @@ case 2:
   rep.carguios
     .map(
       (c) =>
-        `${c.hora} ${rep.mixersSnapshot[c.mixerId]?.codigo ?? c.mixerId}: ${c.labor} · ${c.cantidad} m³`,
+        `${c.hora} ${rep.mixersSnapshot[c.mixerId]?.codigo ?? c.mixerId}: ${c.nivel} · ${c.labor} · ${c.cantidad} m³`,
     )
     .join(" · ") || "Sin registros",
               },
