@@ -693,6 +693,22 @@ case 2:
                       />
                     </div>
                     <div className="space-y-1">
+  <div className="space-y-1">
+  <Label className="text-xs">Nivel</Label>
+  <Input
+    value={l.nivel}
+    placeholder="Ej. Nv. 4500"
+    onChange={(e) =>
+      up({
+        lanzamientos: rep.lanzamientos.map((x) =>
+          x.id === l.id ? { ...x, nivel: e.target.value } : x,
+        ),
+      })
+    }
+  />
+</div>
+
+<div className="space-y-1">
   <Label className="text-xs">Labor</Label>
   <Input
     value={l.labor}
