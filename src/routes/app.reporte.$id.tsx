@@ -100,16 +100,27 @@ const compartirPdf = async () => {
       throw new Error("No se pudo generar el contenido del PDF.");
     }
 
-    const savedFile = await Filesystem.writeFile({
-      path: fileName,
-      data: base64,
-      directory: Directory.Cache,
-    });
+    await Filesystem.writeFile({
+  path: fileName,
+  data: base64,
+  directory: Directory.Cache,
+});
 
-    await Share.share({
+const fileUri = await Filesystem.getUri({
+  path: fileName,
+  directory: Directory.Cache,
+});
+
+const canShare = await Share.canShare();
+
+if (!canShare.value) {
+  throw new Error("Este dispositivo no permite compartir archivos.");
+}
+
+await Share.share({
   title: rep.correlativo,
-  text: `${resumenTexto}\n\n`,
-  url: savedFile.uri,
+  text: resumenTexto,
+  files: [fileUri.uri],
   dialogTitle: "Compartir PDF",
 });
   } catch (error) {
