@@ -105,37 +105,37 @@ self.addEventListener("fetch", (event) => {
       url.pathname
     );
 
-  if (isStaticAsset) {
-    event.respondWith(
-      (async () => {
-        const cache = await caches.open(CACHE_NAME);
-        const cached = await cache.match(request);
+  
+if (isStaticAsset) {
+  event.respondWith(
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(request);
 
-        const networkRequest = fetch(request)
-          .then((response) => {
-            if (response.ok) {
-              cache.put(request, response.clone());
-            }
+      if (cached) {
+        return cached;
+      }
 
-            return response;
-          });
+      try {
+        const response = await fetch(request);
 
-        if (cached) {
-          event.waitUntil(networkRequest.catch(() => undefined));
-          return cached;
+        if (response.ok) {
+          await cache.put(request, response.clone());
         }
 
-        try {
-          return await networkRequest;
-        } catch {
-          return new Response("Recurso no disponible sin conexión.", {
+        return response;
+      } catch {
+        return new Response(
+          "Recurso no disponible sin conexión.",
+          {
             status: 503,
             headers: {
               "Content-Type": "text/plain; charset=utf-8",
             },
-          });
-        }
-      })()
-    );
-  }
+          }
+        );
+      }
+    })()
+  );
+}
 });
