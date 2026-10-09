@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
@@ -120,6 +120,19 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .catch((error) => {
+          console.error(
+            "No se pudo activar el funcionamiento sin conexión:",
+            error
+          );
+        });
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
