@@ -297,3 +297,49 @@ export function nombreEquipo(data: OpsData, id: string) {
 export function nombreSupervisor(data: OpsData, id: string) {
   return data.usuarios.find((u) => u.id === id)?.nombre ?? "Sin asignar";
 }
+/**
+ * Sincroniza los equipos activos del catálogo con el reporte
+ * en curso, conservando los estados y datos ya registrados.
+ */
+export function sincronizarEquiposReporte(
+  reporte: Reporte,
+  data: OpsData,
+): Reporte {
+  const robotsSnapshot = { ...reporte.robotsSnapshot };
+  const mixersSnapshot = { ...reporte.mixersSnapshot };
+  const robots = { ...reporte.robots };
+  const mixers = { ...reporte.mixers };
+  for (const equipo of data.robots.filter((e) => e.activo)) {
+    if (!robotsSnapshot[equipo.id]) {
+      robotsSnapshot[equipo.id] = { ...equipo };
+    }
+    if (!robots[equipo.id]) {
+      robots[equipo.id] = {
+        estado: "operativo",
+        combustible: {
+          inicio: false,
+          media: false,
+          final: false,
+        },
+        aditivo: null,
+      };
+    }
+  }
+  for (const equipo of data.mixers.filter((e) => e.activo)) {
+    if (!mixersSnapshot[equipo.id]) {
+      mixersSnapshot[equipo.id] = { ...equipo };
+    }
+    if (!mixers[equipo.id]) {
+      mixers[equipo.id] = {
+        estado: "operativo",
+      };
+    }
+  }
+  return {
+    ...reporte,
+    robotsSnapshot,
+    mixersSnapshot,
+    robots,
+    mixers,
+  };
+}
