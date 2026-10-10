@@ -140,6 +140,16 @@ const [guardadoLocal, setGuardadoLocal] = useState(true);
   }
 }, []);
 
+  // Incorporar al reporte los equipos activos añadidos al catálogo.
+  useEffect(() => {
+    setRep((actual) => {
+      if (!actual || actual.estado !== "borrador") {
+        return actual;
+      }
+      return sincronizarEquiposReporte(actual, data);
+    });
+  }, [data.robots, data.mixers, rep?.id, rep?.estado]);
+
     // Autoguardado en el dispositivo
   useEffect(() => {
     if (!rep || rep.estado === "finalizado") return;
