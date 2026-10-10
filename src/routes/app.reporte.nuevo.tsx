@@ -14,6 +14,7 @@ import {
   iniciarNuevaGuardia,
   nombreEquipo,
   nombreSupervisor,
+  sincronizarEquiposReporte,
   nuevoReporte,
   uid,
   useOpsData,
