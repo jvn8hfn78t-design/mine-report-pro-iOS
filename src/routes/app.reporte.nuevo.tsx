@@ -136,6 +136,8 @@ const [paso, setPaso] = useState(0);
 const [errores, setErrores] = useState<string[]>([]);
 const [mostrarIndice, setMostrarIndice] = useState(false);
 const [guardadoLocal, setGuardadoLocal] = useState(true);
+const cameraInputRef = useRef<HTMLInputElement>(null);
+const galleryInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
   const d = getData();
