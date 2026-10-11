@@ -75,6 +75,44 @@ const PASOS = [
 
 const selectClass = "h-9 w-full rounded-md border border-input bg-background px-3 text-sm";
 
+
+async function comprimirFoto(file: File): Promise<string> {
+  const url = URL.createObjectURL(file);
+
+  try {
+    const img = new Image();
+
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error("No se pudo abrir la imagen."));
+      img.src = url;
+    });
+
+    const maxLado = 1280;
+    const escala = Math.min(
+      1,
+      maxLado / Math.max(img.naturalWidth, img.naturalHeight),
+    );
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(img.naturalWidth * escala));
+    canvas.height = Math.max(1, Math.round(img.naturalHeight * escala));
+
+    const contexto = canvas.getContext("2d");
+
+    if (!contexto) {
+      throw new Error("No se pudo procesar la imagen.");
+    }
+
+    contexto.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    return canvas.toDataURL("image/jpeg", 0.65);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+
 function Contadores({ estados }: { estados: EstadoEquipo[] }) {
   return (
     <div className="sticky top-2 z-20 grid grid-cols-2 gap-2 rounded-lg border border-border bg-card/95 p-1.5 shadow-sm backdrop-blur sm:grid-cols-4">
