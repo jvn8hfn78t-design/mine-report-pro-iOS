@@ -241,6 +241,7 @@ mixers: Object.fromEntries(
     fallas: [],
     desechos: [],
     observaciones: "",
+    fotos: [],
     estado: "borrador",
     creadoEn: new Date().toISOString(),
     finalizadoEn: null,
