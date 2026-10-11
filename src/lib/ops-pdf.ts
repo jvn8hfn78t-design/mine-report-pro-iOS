@@ -204,20 +204,72 @@ y += 10;
     doc.setTextColor(60, 60, 60);
   }
 
+  
   doc.text(texto, 40, y + 6);
+
+  const fotos = Array.isArray(rep.fotos) ? rep.fotos : [];
+
+  fotos.forEach((foto, indice) => {
+    doc.addPage();
+
+    const anchoPagina = doc.internal.pageSize.getWidth();
+    const altoPagina = doc.internal.pageSize.getHeight();
+
+    doc.setFontSize(12);
+    doc.setTextColor(30, 30, 30);
+    doc.text(
+      `FOTOGRAFÍA DE GUARDIA ${indice + 1} DE ${fotos.length}`,
+      40,
+      40,
+    );
+
+    try {
+      const propiedades = doc.getImageProperties(foto);
+      const margen = 40;
+      const espacioSuperior = 65;
+      const espacioInferior = 40;
+
+      const anchoDisponible = anchoPagina - margen * 2;
+      const altoDisponible =
+        altoPagina - espacioSuperior - espacioInferior;
+
+      const escala = Math.min(
+        anchoDisponible / propiedades.width,
+        altoDisponible / propiedades.height,
+      );
+
+      const anchoImagen = propiedades.width * escala;
+      const altoImagen = propiedades.height * escala;
+
+      const x = (anchoPagina - anchoImagen) / 2;
+      const yImagen =
+        espacioSuperior + (altoDisponible - altoImagen) / 2;
+
+      doc.addImage(
+        foto,
+        "JPEG",
+        x,
+        yImagen,
+        anchoImagen,
+        altoImagen,
+      );
+    } catch (error) {
+      console.error(
+        `No se pudo incorporar la fotografía ${indice + 1} al PDF.`,
+        error,
+      );
+
+      doc.setFontSize(10);
+      doc.text(
+        "No se pudo incorporar esta fotografía.",
+        40,
+        80,
+      );
+    }
+  });
 
   return doc;
 }
-
-export async function descargarPdf(rep: Reporte, data: OpsData) {
-  const doc = construirPdf(rep, data);
-  const fileName = `Reporte_${nombreSupervisor(data, rep.supervisorId).replace(/\s+/g, "-")}_${rep.fecha.replace(/\//g, "-")}_${rep.tipoGuardia === "dia" ? "Dia" : "Noche"}.pdf`;
-
-  // Navegador / Vercel
-  if (!Capacitor.isNativePlatform()) {
-    doc.save(fileName);
-    return;
-  }
 
   // Android / Capacitor
   const dataUri = doc.output("datauristring");
