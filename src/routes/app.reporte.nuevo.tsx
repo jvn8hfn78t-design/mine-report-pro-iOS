@@ -238,6 +238,33 @@ const mixersActivos = useMemo(
 
   const up = (patch: Partial<Reporte>) => setRep({ ...rep, ...patch });
 
+  
+const agregarFotos = async (files: FileList | null) => {
+  if (!files || files.length === 0) return;
+
+  try {
+    const nuevas: string[] = [];
+
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/")) continue;
+      nuevas.push(await comprimirFoto(file));
+    }
+
+    if (nuevas.length > 0) {
+      up({ fotos: [...(rep.fotos ?? []), ...nuevas] });
+      toast.success(
+        nuevas.length === 1
+          ? "Foto agregada al reporte."
+          : `${nuevas.length} fotos agregadas al reporte.`,
+      );
+    }
+  } catch (error) {
+    console.error("Error al procesar las fotos:", error);
+    toast.error("No se pudo procesar una foto. Inténtalo nuevamente.");
+  }
+};
+
+
   const ROBOT_DETALLE_BASE: RobotDetalle = {
     estado: "operativo",
     combustible: { inicio: false, media: false, final: false },
