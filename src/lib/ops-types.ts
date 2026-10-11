@@ -105,9 +105,11 @@ export interface Reporte {
   fallas: Falla[];
   desechos: Desecho[];
   observaciones: string;
+  fotos: string[];
   estado: EstadoReporte;
   creadoEn: string;
   finalizadoEn: string | null;
+
 }
 
 export const TIPOS_FALLA = [
