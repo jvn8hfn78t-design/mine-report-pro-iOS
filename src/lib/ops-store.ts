@@ -129,8 +129,10 @@ export function getData(): OpsData {
       ? guardado.mixers
       : base.mixers;
 
+    
     const reportesCompatibles = reportesGuardados.map((reporte) => ({
       ...reporte,
+      fotos: Array.isArray(reporte.fotos) ? reporte.fotos : [],
       robotsSnapshot:
         reporte.robotsSnapshot ??
         Object.fromEntries(
