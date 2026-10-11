@@ -1244,105 +1244,6 @@ case 2:
               </div>
             )}
 
-
-<div className="space-y-3 rounded-lg border border-border p-3">
-  <div>
-    <h3 className="font-semibold">Fotografías de la guardia</h3>
-    <p className="text-sm text-muted-foreground">
-      Toma fotos o selecciónalas de tu galería. Se incluirán en el PDF.
-    </p>
-  </div>
-
-  <input
-    ref={cameraInputRef}
-    type="file"
-    accept="image/*"
-    capture="environment"
-    className="hidden"
-    onChange={(e) => {
-      void agregarFotos(e.target.files);
-      e.currentTarget.value = "";
-    }}
-  />
-
-  <input
-    ref={galleryInputRef}
-    type="file"
-    accept="image/*"
-    multiple
-    className="hidden"
-    onChange={(e) => {
-      void agregarFotos(e.target.files);
-      e.currentTarget.value = "";
-    }}
-  />
-
-  <div className="grid grid-cols-2 gap-2">
-    <Button
-      type="button"
-      variant="outline"
-      onClick={() => cameraInputRef.current?.click()}
-    >
-      <Camera className="mr-2 size-4" />
-      Tomar foto
-    </Button>
-
-    <Button
-      type="button"
-      variant="outline"
-      onClick={() => galleryInputRef.current?.click()}
-    >
-      <ImagePlus className="mr-2 size-4" />
-      Elegir de galería
-    </Button>
-  </div>
-
-  {(rep.fotos ?? []).length > 0 && (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {(rep.fotos ?? []).map((foto, indice) => (
-        <div
-          key={`${indice}-${foto.length}`}
-          className="relative overflow-hidden rounded-lg border border-border"
-        >
-          <img
-            src={foto}
-            alt={`Foto de la guardia ${indice + 1}`}
-            className="aspect-square w-full object-cover"
-          />
-
-          <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            className="absolute right-1 top-1 size-8"
-            aria-label={`Eliminar foto ${indice + 1}`}
-            onClick={() =>
-              up({
-                fotos: (rep.fotos ?? []).filter(
-                  (_, i) => i !== indice,
-                ),
-              })
-            }
-          >
-            <X className="size-4" />
-          </Button>
-
-          <p className="p-1 text-center text-xs">
-            Foto {indice + 1}
-          </p>
-        </div>
-      ))}
-    </div>
-  )}
-
-  {(rep.fotos ?? []).length === 0 && (
-    <p className="text-sm text-muted-foreground">
-      Todavía no has agregado fotografías.
-    </p>
-  )}
-</div>
-
-
             {[
               {
                 titulo: "Datos de guardia",
@@ -1422,7 +1323,108 @@ case 2:
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">{s.contenido}</p>
               </div>
-            ))}
+                        ))}
+
+            {/* Fotografías de la guardia */}
+            <div className="space-y-3 rounded-lg border border-border p-3">
+              <div>
+                <h3 className="font-semibold">
+                  Fotografías de la guardia
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Adjunta fotografías como evidencia del trabajo realizado.
+                  Se incluirán en el PDF.
+                </p>
+              </div>
+
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                onChange={(e) => {
+                  void agregarFotos(e.target.files);
+                  e.currentTarget.value = "";
+                }}
+              />
+
+              <input
+                ref={galleryInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  void agregarFotos(e.target.files);
+                  e.currentTarget.value = "";
+                }}
+              />
+
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  type="button"
+                  className="bg-amber-400 text-gray-950 hover:bg-amber-500"
+                  onClick={() => cameraInputRef.current?.click()}
+                >
+                  <Camera className="mr-2 size-4" />
+                  Tomar foto
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => galleryInputRef.current?.click()}
+                >
+                  <ImagePlus className="mr-2 size-4" />
+                  Elegir de galería
+                </Button>
+              </div>
+
+              {(rep.fotos ?? []).length > 0 && (
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {(rep.fotos ?? []).map((foto, indice) => (
+                    <div
+                      key={`${indice}-${foto.length}`}
+                      className="relative overflow-hidden rounded-lg border border-border"
+                    >
+                      <img
+                        src={foto}
+                        alt={`Foto de la guardia ${indice + 1}`}
+                        className="aspect-square w-full object-cover"
+                      />
+
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute right-1 top-1 size-8"
+                        aria-label={`Eliminar foto ${indice + 1}`}
+                        onClick={() =>
+                          up({
+                            fotos: (rep.fotos ?? []).filter(
+                              (_, i) => i !== indice,
+                            ),
+                          })
+                        }
+                      >
+                        <X className="size-4" />
+                      </Button>
+
+                      <p className="p-1 text-center text-xs">
+                        Foto {indice + 1}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {(rep.fotos ?? []).length === 0 && (
+                <p className="text-sm text-muted-foreground">
+                  Todavía no has agregado fotografías.
+                </p>
+              )}
+            </div>
 
             <Button className="w-full" size="lg" onClick={finalizar}>
               <CheckCircle2 className="mr-1 size-4" /> Finalizar guardia
