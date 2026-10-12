@@ -297,7 +297,7 @@ await Share.share({
         {Object.entries(rep.robots).map(([rid, det]) => {
           const edicion = robotsEditados?.[rid];
           const combustible = edicion?.combustible ?? det.combustible;
-          const aditivo = edicion?.aditivo ?? det.aditivo;
+          const aditivo = edicion ? edicion.aditivo : det.aditivo;
 
           return (
             <div
