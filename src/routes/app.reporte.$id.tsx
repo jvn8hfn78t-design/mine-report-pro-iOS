@@ -1,4 +1,6 @@
+
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { Download, Lock, Upload, Pencil, Save, X } from "lucide-react";
 import { toast } from "sonner";
 import { Capacitor } from "@capacitor/core";
@@ -6,7 +8,13 @@ import { Directory, Filesystem } from "@capacitor/filesystem";
 import { Share } from "@capacitor/share";
 import { Button } from "@/components/ui/button";
 import { construirPdf, descargarPdf } from "@/lib/ops-pdf";
-import { getData, nombreEquipo, nombreSupervisor, useOpsData } from "@/lib/ops-store";
+import {
+  getData,
+  guardarReporte,
+  nombreEquipo,
+  nombreSupervisor,
+  useOpsData,
+} from "@/lib/ops-store";
 import { ESTADO_CLASSES, ESTADO_LABEL } from "@/lib/ops-types";
 
 export const Route = createFileRoute("/app/reporte/$id")({
