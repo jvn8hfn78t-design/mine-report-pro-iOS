@@ -38,10 +38,24 @@ function Seccion({ titulo, children }: { titulo: string; children: React.ReactNo
   );
 }
 
+
 function DetalleReporte() {
   const { id } = Route.useParams();
   const data = useOpsData();
   const rep = data.reportes.find((r) => r.id === id);
+
+  const [editandoCombustible, setEditandoCombustible] = useState(false);
+  const [robotsEditados, setRobotsEditados] = useState<Record<
+    string,
+    {
+      combustible: {
+        inicio: boolean;
+        media: boolean;
+        final: boolean;
+      };
+      aditivo: boolean | null;
+    }
+  > | null>(null);
 
   if (!rep) {
     return (
