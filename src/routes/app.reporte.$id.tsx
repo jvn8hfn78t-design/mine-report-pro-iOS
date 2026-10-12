@@ -1,4 +1,3 @@
-
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Lock, Upload, Pencil, Save, X } from "lucide-react";
@@ -236,35 +235,61 @@ await Share.share({
           </span>
         </div>
 
+        
         <div className="mt-4 flex flex-wrap gap-2">
-  <Button
-  onClick={async () => {
-    try {
-      await descargarPdf(rep, getData());
+          {rep.estado === "finalizado" && (
+            editandoCombustible ? (
+              <>
+                <Button onClick={guardarEdicionCombustible}>
+                  <Save className="mr-1 size-4" /> Guardar cambios
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={cancelarEdicionCombustible}
+                >
+                  <X className="mr-1 size-4" /> Cancelar
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="outline"
+                onClick={iniciarEdicionCombustible}
+              >
+                <Pencil className="mr-1 size-4" />
+                Editar combustible y aditivo
+              </Button>
+            )
+          )}
 
-      toast.success(
-        Capacitor.isNativePlatform()
-          ? "PDF guardado en Documentos."
-          : "PDF descargado correctamente.",
-      );
-    } catch (error) {
-      console.error("ERROR AL GENERAR/GUARDAR PDF:", error);
+          <Button
+            onClick={async () => {
+              try {
+                await descargarPdf(rep, getData());
 
-      toast.error(
-        error instanceof Error
-          ? `Error PDF: ${error.message}`
-          : "Error desconocido al guardar el PDF.",
-      );
-    }
-  }}
->
-  <Download className="mr-1 size-4" /> Descargar PDF
-</Button>
+                toast.success(
+                  Capacitor.isNativePlatform()
+                    ? "PDF guardado en Documentos."
+                    : "PDF descargado correctamente.",
+                );
+              } catch (error) {
+                console.error("ERROR AL GENERAR/GUARDAR PDF:", error);
 
-  <Button variant="outline" onClick={compartirPdf}>
-    <Upload className="mr-1 size-4" /> Compartir PDF
-  </Button>
-</div>
+                toast.error(
+                  error instanceof Error
+                    ? `Error PDF: ${error.message}`
+                    : "Error desconocido al guardar el PDF.",
+                );
+              }
+            }}
+          >
+            <Download className="mr-1 size-4" /> Descargar PDF
+          </Button>
+
+          <Button variant="outline" onClick={compartirPdf}>
+            <Upload className="mr-1 size-4" /> Compartir PDF
+          </Button>
+        </div>
+
       </div>
 
       
