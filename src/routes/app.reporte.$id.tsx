@@ -267,24 +267,124 @@ await Share.share({
 </div>
       </div>
 
+      
       <Seccion titulo="Estado de robots">
-        {Object.entries(rep.robots).map(([rid, det]) => (
-          <div key={rid} className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-2">
-            <span>{nombreEquipoSnapshot(rid)}</span>
-            <span className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">
-                Comb.{" "}
-                {[det.combustible.inicio && "Inicio", det.combustible.media && "Media", det.combustible.final && "Final"]
-                  .filter(Boolean)
-                  .join("/") || "—"}{" "}
-                · Aditivo {det.aditivo === null ? "—" : det.aditivo ? "Sí" : "No"}
-              </span>
-              <span className={`rounded px-2 py-0.5 text-[10px] font-semibold ${ESTADO_CLASSES[det.estado]}`}>
-                {ESTADO_LABEL[det.estado]}
-              </span>
-            </span>
-          </div>
-        ))}
+        {Object.entries(rep.robots).map(([rid, det]) => {
+          const edicion = robotsEditados?.[rid];
+          const combustible = edicion?.combustible ?? det.combustible;
+          const aditivo = edicion?.aditivo ?? det.aditivo;
+
+          return (
+            <div
+              key={rid}
+              className="border-b border-border/60 pb-3"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-medium">{nombreEquipoSnapshot(rid)}</span>
+                <span
+                  className={`rounded px-2 py-0.5 text-[10px] font-semibold ${ESTADO_CLASSES[det.estado]}`}
+                >
+                  {ESTADO_LABEL[det.estado]}
+                </span>
+              </div>
+
+              {editandoCombustible ? (
+                <div className="mt-3 space-y-3">
+                  <div>
+                    <p className="mb-2 text-xs font-semibold text-muted-foreground">
+                      Combustible
+                    </p>
+                    <div className="flex flex-wrap gap-4">
+                      {(
+                        [
+                          ["inicio", "Inicio"],
+                          ["media", "Media"],
+                          ["final", "Final"],
+                        ] as const
+                      ).map(([campo, etiqueta]) => (
+                        <label
+                          key={campo}
+                          className="flex items-center gap-2 text-sm"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={combustible[campo]}
+                            onChange={(e) =>
+                              setRobotsEditados((prev) =>
+                                prev
+                                  ? {
+                                      ...prev,
+                                      [rid]: {
+                                        ...prev[rid],
+                                        combustible: {
+                                          ...prev[rid].combustible,
+                                          [campo]: e.target.checked,
+                                        },
+                                      },
+                                    }
+                                  : prev,
+                              )
+                            }
+                          />
+                          {etiqueta}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <label
+                      htmlFor={`aditivo-${rid}`}
+                      className="text-xs font-semibold text-muted-foreground"
+                    >
+                      Aditivo
+                    </label>
+                    <select
+                      id={`aditivo-${rid}`}
+                      className="rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={
+                        aditivo === null ? "" : aditivo ? "si" : "no"
+                      }
+                      onChange={(e) =>
+                        setRobotsEditados((prev) =>
+                          prev
+                            ? {
+                                ...prev,
+                                [rid]: {
+                                  ...prev[rid],
+                                  aditivo:
+                                    e.target.value === ""
+                                      ? null
+                                      : e.target.value === "si",
+                                },
+                              }
+                            : prev,
+                        )
+                      }
+                    >
+                      <option value="">Sin dato</option>
+                      <option value="si">Sí</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Comb.{" "}
+                  {[
+                    combustible.inicio && "Inicio",
+                    combustible.media && "Media",
+                    combustible.final && "Final",
+                  ]
+                    .filter(Boolean)
+                    .join("/") || "—"}{" "}
+                  · Aditivo{" "}
+                  {aditivo === null ? "—" : aditivo ? "Sí" : "No"}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </Seccion>
 
       <Seccion titulo="Estado de mixers">
