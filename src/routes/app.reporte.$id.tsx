@@ -68,7 +68,64 @@ function DetalleReporte() {
     );
   }
 
+  
+  const iniciarEdicionCombustible = () => {
+    setRobotsEditados(
+      Object.fromEntries(
+        Object.entries(rep.robots).map(([rid, det]) => [
+          rid,
+          {
+            combustible: { ...det.combustible },
+            aditivo: det.aditivo,
+          },
+        ]),
+      ),
+    );
+    setEditandoCombustible(true);
+  };
+
+  const cancelarEdicionCombustible = () => {
+    setRobotsEditados(null);
+    setEditandoCombustible(false);
+  };
+
+  const guardarEdicionCombustible = () => {
+    if (!robotsEditados) return;
+
+    const robotsActualizados = Object.fromEntries(
+      Object.entries(rep.robots).map(([rid, det]) => {
+        const editado = robotsEditados[rid];
+
+        return [
+          rid,
+          editado
+            ? {
+                ...det,
+                combustible: { ...editado.combustible },
+                aditivo: editado.aditivo,
+              }
+            : det,
+        ];
+      }),
+    );
+
+    const guardado = guardarReporte({
+      ...rep,
+      robots: robotsActualizados,
+    });
+
+    if (!guardado) {
+      toast.error("No se pudieron guardar los cambios.");
+      return;
+    }
+
+    setEditandoCombustible(false);
+    setRobotsEditados(null);
+    toast.success("Combustible y aditivo actualizados.");
+  };
+
   const nombreEquipoSnapshot = (id: string) => {
+
   const equipo =
     rep.robotsSnapshot[id] ??
     rep.mixersSnapshot[id];
